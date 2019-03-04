@@ -1,0 +1,3 @@
+[submodule "tools/sdk"]
+	path = tools/sdk
+	url = https://github.com/kendryte/kendryte-freertos-sdk
