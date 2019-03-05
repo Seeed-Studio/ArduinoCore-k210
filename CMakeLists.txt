@@ -5,3 +5,4 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 
 add_subdirectory(tools/sdk)
+add_subdirectory(cores/k210)
