@@ -1,6 +1,3 @@
-#project(drivers)
-
-# create drivers library
 FILE(GLOB_RECURSE LIB_SRC_NOASM
         "${CMAKE_CURRENT_LIST_DIR}/*.cpp"
         "${CMAKE_CURRENT_LIST_DIR}/*.c"
@@ -22,3 +19,4 @@ SET_TARGET_PROPERTIES(arduino_core PROPERTIES LINKER_LANGUAGE C)
 TARGET_LINK_LIBRARIES(arduino_core freertos)
 
 TARGET_INCLUDE_DIRECTORIES(arduino_core PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+

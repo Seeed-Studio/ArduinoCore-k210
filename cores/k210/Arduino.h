@@ -19,7 +19,6 @@
 
 #ifndef ARDUINO_API_H
 #define ARDUINO_API_H
-
 // version 1.0.0
 #define ARDUINO_API_VERSION 10000
 
@@ -51,5 +50,10 @@
 
 // Misc Arduino core functions
 #include "Common.h"
+
+using std::min;
+using std::max;
+using std::isinf;
+using std::isnan;
 
 #endif
