@@ -29,6 +29,9 @@
 
 int main()
 {
+    /*init timer0 counter*/
+    init();
+
     setup();
     for (;;)
     {
