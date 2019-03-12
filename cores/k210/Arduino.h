@@ -63,4 +63,5 @@ using ::round;
 // Misc Arduino core functions
 #include "Common.h"
 
+#include "pins_arduino.h"
 #endif

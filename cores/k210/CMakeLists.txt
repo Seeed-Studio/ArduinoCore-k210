@@ -1,6 +1,7 @@
 FILE(GLOB_RECURSE LIB_SRC_NOASM
         "${CMAKE_CURRENT_LIST_DIR}/*.cpp"
         "${CMAKE_CURRENT_LIST_DIR}/*.c"
+        "${CMAKE_CURRENT_LIST_DIR}/../../variants/${BOARD}/*.c"
         )
 
 FILE(GLOB_RECURSE ASSEMBLY_FILES

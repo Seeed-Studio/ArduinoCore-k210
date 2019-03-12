@@ -2,5 +2,5 @@
 
 ```
 mkdir build && cd build
-cmake ../ -DPROJ_PATH=libraries/built-in/01.Basics/BareMinimum -DPROJ=BareMinimum  -DTOOLCHAIN=/opt/kendryte-toolchain/bin
+cmake ../ -DPROJ_PATH=libraries/built-in/01.Basics/Blink -DPROJ=Blink -DBOARD=k210 -DTOOLCHAIN=/opt/kendryte-toolchain/bin
 ```

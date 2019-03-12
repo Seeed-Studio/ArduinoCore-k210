@@ -6,6 +6,14 @@ if (NOT PROJ_PATH)
 else()
     message("PROJ_PATH = ${PROJ_PATH}")
 endif ()
+
+# basic config
+if (NOT BOARD)
+    message(FATAL_ERROR "BOARD must be set. e.g. -BOARD=Grove AI Edge")
+else()
+    message("BOARD = ${BOARD}")
+endif ()
+
 ## Use SDK builder to build this project
 #include("tools/sdk/cmake/executable.cmake")
 include(tools/sdk/cmake/common.cmake)
@@ -46,7 +54,10 @@ SET_PROPERTY(SOURCE ${PROJ_ASSEMBLY_FILES} PROPERTY LANGUAGE C)
 SET_SOURCE_FILES_PROPERTIES(${PROJ_ASSEMBLY_FILES} PROPERTIES COMPILE_FLAGS "-x assembler-with-cpp -D __riscv64")
 
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_LIST_DIR}/tools/sdk/lib/arch/include ${CMAKE_CURRENT_LIST_DIR}/tools/sdk/lib/utils/include)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_LIST_DIR}/tools/sdk/lib/arch/include 
+                    ${CMAKE_CURRENT_LIST_DIR}/tools/sdk/lib/utils/include
+                    ${CMAKE_CURRENT_LIST_DIR}/variants/${BOARD}
+                    )
 
 
 ## Use SDK library API to add source files
