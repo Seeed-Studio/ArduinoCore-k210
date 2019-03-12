@@ -27,7 +27,6 @@
 
 #include "Arduino.h"
 #include <devices.h>
-#include <stdio.h>
 #include <FreeRTOS.h>
 #include <task.h>
 
@@ -45,7 +44,7 @@ extern handle_t gio;
  *   complete description of the functionality.)
  * @return: Nothing
  */
-void pinMode( uint32_t ulPin, uint32_t ulMode ){
+void pinMode( pin_size_t ulPin, PinMode ulMode ){
     gpio_set_drive_mode(ulPin, 2, ulMode);
 }
 
@@ -66,7 +65,7 @@ void pinMode( uint32_t ulPin, uint32_t ulMode ){
  * @param: HIGH or LOW
  * @return: Nothing
  */
-void digitalWrite( uint32_t ulPin, uint32_t ulVal ){
+void digitalWrite( pin_size_t ulPin, PinStatus ulVal ){
     gpio_set_pin_value(gio, ulPin, ulVal);
 }
 
@@ -75,7 +74,7 @@ void digitalWrite( uint32_t ulPin, uint32_t ulVal ){
  * @param: The number of the digital pin you want to read
  * @return: HIGH or LOW
  */
-int digitalRead( uint32_t ulPin ){
+PinStatus digitalRead( pin_size_t ulPin ){
     return gpio_get_pin_value(gio, ulPin);
 }
 

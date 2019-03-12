@@ -25,6 +25,10 @@
  */
 #include "HardwareSerial.h"
 
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SERIAL)
+HardwareSerial Serial(0);
+#endif
+
 /**
  * @description: 
  * @param {type} 
@@ -56,7 +60,7 @@ void HardwareSerial::begin(unsigned long baudrate, uint16_t config){
     char uart_str[14];
     sprintf(uart_str,"/dev/uart%d", _uart_nr);
     file = io_open(uart_str);
-    COMMON_ENTRY(uart);
+   // COMMON_ENTRY(uart);
 }
 
 /**
@@ -74,7 +78,7 @@ void HardwareSerial::end(){
  * @return: 
  */
 int HardwareSerial::available(void){
-
+    return 0;
 }
 
 /**
@@ -83,7 +87,7 @@ int HardwareSerial::available(void){
  * @return: 
  */
 int HardwareSerial::peek(void){
-
+    return 0;
 }
 
 /**
@@ -92,7 +96,7 @@ int HardwareSerial::peek(void){
  * @return: 
  */
 int HardwareSerial::read(void){
-
+    return 0;
 }
 
 /**
@@ -110,5 +114,14 @@ void HardwareSerial::flush(void){
  * @return: 
  */
 size_t HardwareSerial::write(uint8_t){
+    return 0;
+}
 
+/**
+ * @description: 
+ * @param {type} 
+ * @return: 
+ */
+HardwareSerial::operator bool() const{
+    return true;
 }

@@ -24,7 +24,8 @@
  * THE SOFTWARE.
  */
 #include "devices.h"
-
+#include <FreeRTOS.h>
+#include <task.h>
 volatile unsigned long timer0_overflow_count = 0;
 volatile unsigned long timer0_millis = 0;
 
@@ -87,10 +88,10 @@ void delayMicroseconds(unsigned int us){
 
 
 
-static void on_tick ( void ∗ unused )
+static void on_tick ( void *unused )
 {
     timer0_overflow_count++;
-    if (timer0_overflow_count %MILLIS_INC == 0){
+    if (timer0_overflow_count % MILLIS_INC == 0){
         timer0_millis++;
     }
 }

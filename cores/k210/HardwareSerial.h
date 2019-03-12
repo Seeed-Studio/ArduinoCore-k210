@@ -21,7 +21,6 @@
 #include <inttypes.h>
 #include "Stream.h"
 #include <devices.h>
-#include <stdio.h>
 #include <string.h>
 
 // XXX: Those constants should be defined as const int / enums?
@@ -102,7 +101,7 @@ class HardwareSerial : public Stream
     void flush(void);
     size_t write(uint8_t);
     using Print::write; // pull in write(str) and write(buf, size) from Print
-    operator bool();
+    operator bool() const;
   protected:
     int _uart_nr;
     handle_t file;
@@ -110,4 +109,8 @@ class HardwareSerial : public Stream
 
 // XXX: Are we keeping the serialEvent API?
 extern void serialEventRun(void) __attribute__((weak));
+
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SERIAL)
+extern HardwareSerial Serial;
+#endif
 

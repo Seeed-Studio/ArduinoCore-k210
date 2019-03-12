@@ -25,6 +25,10 @@
 #include "Binary.h"
 
 #ifdef __cplusplus
+
+#include <algorithm>
+#include <cmath>
+
 #include "Client.h"
 #include "HardwareI2C.h"
 #include "HardwareSerial.h"
@@ -39,6 +43,14 @@
 #include "Udp.h"
 #include "USBAPI.h"
 #include "WCharacter.h"
+
+
+
+using std::min;
+using std::max;
+using std::isinf;
+using std::isnan;
+using ::round;
 #endif
 
 /* Standard C library includes */
@@ -50,10 +62,5 @@
 
 // Misc Arduino core functions
 #include "Common.h"
-
-using std::min;
-using std::max;
-using std::isinf;
-using std::isnan;
 
 #endif
