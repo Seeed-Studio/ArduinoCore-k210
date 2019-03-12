@@ -45,6 +45,10 @@ SET_SOURCE_FILES_PROPERTIES(${PROJ_LIB_SRC_INO} PROPERTIES COMPILE_FLAGS "-x c++
 SET_PROPERTY(SOURCE ${PROJ_ASSEMBLY_FILES} PROPERTY LANGUAGE C)
 SET_SOURCE_FILES_PROPERTIES(${PROJ_ASSEMBLY_FILES} PROPERTIES COMPILE_FLAGS "-x assembler-with-cpp -D __riscv64")
 
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_LIST_DIR}/tools/sdk/lib/arch/include ${CMAKE_CURRENT_LIST_DIR}/tools/sdk/lib/utils/include)
+
+
 ## Use SDK library API to add source files
 add_source_files(${PROJ_SRC})
 set(arduino_libs arduino_core)
