@@ -1,3 +1,6 @@
 [submodule "tools/sdk"]
 	path = tools/sdk
 	url = https://github.com/kendryte/kendryte-freertos-sdk
+[submodule "tools/kflash"]
+	path = tools/kflash
+	url = https://github.com/kendryte/kflash.py
