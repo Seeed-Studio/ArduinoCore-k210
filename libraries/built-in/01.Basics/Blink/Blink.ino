@@ -21,17 +21,50 @@
 
   http://www.arduino.cc/en/Tutorial/Blink
 */
+#include "Arduino.h"
+#include <stdio.h>
+
+//# define REG32_PTR(x)  (*reinterpret_cast<volatile uint32_t *>(x))
+
 
 // the setup function runs once when you press reset or power the board
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
   pinMode(LED_BUILTIN, OUTPUT);
 }
+void dump_reg(uint32_t reg, uint32_t size){
+  # define REG32_VAL(x) (*reinterpret_cast<volatile uint32_t *>(x))
 
+    // int i;
+    // for(i = 0;i < size ; i += 4){
+    //   printf("reg: %x ,val: %x \r\n",reg, REG32_VAL(reg));
+    //   reg += i;
+    // }
+    printf("reg: 0x38001000U ,val: %x \r\n", REG32_VAL(0x38001000U));
+    printf("reg: 0x38001004U ,val: %x \r\n", REG32_VAL(0x38001004U));
+    printf("reg: 0x38001008U ,val: %x \r\n", REG32_VAL(0x38001008U));
+    printf("reg: 0x3800100CU ,val: %x \r\n", REG32_VAL(0x3800100cU));
+    printf("reg: 0x3800100CU ,val: %x \r\n", REG32_VAL(0x38001010U));
+    printf("reg: 0x3800100CU ,val: %x \r\n", REG32_VAL(0x38001014U));
+    printf("reg: 0x3800100CU ,val: %x \r\n", REG32_VAL(0x38001018U));
+    printf("reg: 0x3800100CU ,val: %x \r\n", REG32_VAL(0x3800101CU));
+    printf("reg: 0x3800100CU ,val: %x \r\n", REG32_VAL(0x38001020U));
+    printf("reg: 0x3800100CU ,val: %x \r\n", REG32_VAL(0x38001024U));
+    printf("reg: 0x3800100CU ,val: %x \r\n", REG32_VAL(0x38001028U));
+    printf("reg: 0x3800100CU ,val: %x \r\n", REG32_VAL(0x3800102CU));
+    printf("reg: 0x3800100CU ,val: %x \r\n", REG32_VAL(0x38001030U));
+    printf("reg: 0x3800100CU ,val: %x \r\n", REG32_VAL(0x38001034U));
+    printf("reg: 0x3800100CU ,val: %x \r\n", REG32_VAL(0x38001038U));
+    printf("reg: 0x3800100CU ,val: %x \r\n", REG32_VAL(0x3800103CU));
+    printf("reg: 0x3800100CU ,val: %x \r\n", REG32_VAL(0x38001040U));
+}
 // the loop function runs over and over again forever
 void loop() {
   digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
   delay(1000);                       // wait for a second
   digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
   delay(1000);                       // wait for a second
+  dump_reg(0x38001000U,0x40);
+   printf("---------- \r\n");
 }
+
