@@ -5,6 +5,7 @@ SET_PROPERTY(SOURCE ${PROJ_LIB_SRC_INO} PROPERTY LANGUAGE CXX)
 SET_SOURCE_FILES_PROPERTIES(${PROJ_LIB_SRC_INO} PROPERTIES COMPILE_FLAGS "-x c++")
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/variants/k210
-			${CMAKE_CURRENT_LIST_DIR}/cores/k210)
-add_source_files(${PROJ_LIB_SRC_INO})
+                    ${CMAKE_CURRENT_LIST_DIR}/cores/k210)
+            
+target_sources(${PROJECT_NAME} PUBLIC ${PROJ_LIB_SRC_INO})
 
