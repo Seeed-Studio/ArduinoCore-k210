@@ -45,7 +45,7 @@ extern handle_t gio;
  * @return: Nothing
  */
 void pinMode( pin_size_t ulPin, PinMode ulMode ){
-    gpio_set_drive_mode(ulPin, 2, ulMode);
+    gpio_set_drive_mode(gio, ulPin, ulMode);
 }
 
 /**
