@@ -23,10 +23,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 #include "HardwareSerial.h"
 
 #if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SERIAL)
-HardwareSerial Serial(UART1_BASE_ADDR, SYSCTL_CLOCK_UART1, IRQN_UART1_INTERRUPT);
+HardwareSerial Serial;
 #endif
 
 
@@ -37,90 +38,58 @@ HardwareSerial Serial(UART1_BASE_ADDR, SYSCTL_CLOCK_UART1, IRQN_UART1_INTERRUPT)
  * @param {type} 
  * @return: 
  */
-HardwareSerial::HardwareSerial(uintptr_t base_addr, sysctl_clock_t clock, plic_irq_t irq):
-                            uart_(*reinterpret_cast<volatile uart_t *>(base_addr)), clock_(clock), irq_(irq) {
+HardwareSerial::HardwareSerial(){
 
 }
 
 
-void HardwareSerial::on_irq_recv_callback_(void *userdata)
+int HardwareSerial::on_irq_recv_callback_(void *userdata)
 {
+    char data;
     auto &driver = *reinterpret_cast<HardwareSerial *>(userdata);
-    auto &uart = driver.uart_;
-
-    while (uart.LSR & 1)
-    {
-        driver.rb_->store_char(((uint8_t)(uart.RBR & 0xff)));
-    }
+    uart_receive_data(driver.uart, &data, 1);
+    driver.rb_->store_char(data);
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     xSemaphoreGiveFromISR(driver.receive_event_, &xHigherPriorityTaskWoken);
     if (xHigherPriorityTaskWoken)
     {
-        portYIELD_FROM_ISR();
+        vTaskSwitchContext();
+        //vPortYieldFromISR();
     }
+    return 0;
 }
 
 
-void HardwareSerial::init_(){
+void HardwareSerial::init_(unsigned long baudrate, uint16_t config, uart_device_number_t uart_num, int rx_pin, int tx_pin){
+    fpioa_set_function(rx_pin, pin_map[rx_pin]);
+    fpioa_set_function(tx_pin, pin_map[tx_pin]);
+
+    uart_init(uart_num);
+    uart_configure(uart_num, baudrate, 
+                            UART_BITWIDTH_8BIT, 
+                            uart_stopbit_t((config & SERIAL_STOP_BIT_MASK) >> 4), 
+                            uart_parity_t(config & SERIAL_PARITY_MASK)
+                            );
+
+    uart_set_receive_trigger(uart_num, UART_RECEIVE_FIFO_8);
+    uart_irq_register(uart_num, UART_RECEIVE, on_irq_recv_callback_, this, 2);
+
     receive_event_ = xSemaphoreCreateBinary();
 
-    sysctl_clock_enable(clock_);
-    pic_set_irq_handler(irq_, on_irq_recv_callback_, this);
     rb_ = new RingBuffer();
     rb_->clear();
-    pic_set_irq_priority(irq_, 1);
-    pic_set_irq_enable(irq_, 1);    
+
+    uart = uart_num;
 }
 
 
-void HardwareSerial::ParameterConfig_(uint32_t baud_rate, uint32_t databits, uart_stopbits_t stopbits, uart_parity_t parity) {
-    configASSERT(databits >= 5 && databits <= 8);
-    if (databits == 5)
-    {
-        configASSERT(stopbits != UART_STOP_2);
-    }
-    else
-    {
-        configASSERT(stopbits != UART_STOP_1_5);
-    }
-
-    uint32_t stopbit_val = stopbits == UART_STOP_1 ? 0 : 1;
-    uint32_t parity_val = 0;
-    switch (parity)
-    {
-    case UART_PARITY_NONE:
-        parity_val = 0;
-        break;
-    case UART_PARITY_ODD:
-        parity_val = 1;
-        break;
-    case UART_PARITY_EVEN:
-        parity_val = 3;
-        break;
-    default:
-        configASSERT(!"Invalid parity");
-        break;
-    }
-
-    uint32_t freq = sysctl_clock_get_freq(clock_);
-    uint32_t u16Divider = (freq + UART_BRATE_CONST * baud_rate / 2) / (UART_BRATE_CONST * baud_rate);
-
-    /* Set UART registers */
-    uart_.TCR &= ~(1u);
-    uart_.TCR &= ~(1u << 3);
-    uart_.TCR &= ~(1u << 4);
-    uart_.TCR |= (1u << 2);
-    uart_.TCR &= ~(1u << 1);
-    uart_.DE_EN &= ~(1u);
-
-    uart_.LCR |= 1u << 7;
-    uart_.DLL = u16Divider & 0xFF;
-    uart_.DLH = u16Divider >> 8;
-    uart_.LCR = 0;
-    uart_.LCR = (databits - 5) | (stopbit_val << 2) | (parity_val << 3);
-    uart_.LCR &= ~(1u << 7);
-    uart_.MCR &= ~3;
-    uart_.IER = 1;
+/**
+ * @description: 
+ * @param {type} 
+ * @return: 
+ */
+void HardwareSerial::begin(unsigned long baudrate , uart_device_number_t uart_num_ , int rx_pin_, int tx_pin_){
+    init_(baudrate,SERIAL_8N1,uart_num_,rx_pin_,tx_pin_);
 }
 
 /**
@@ -128,19 +97,8 @@ void HardwareSerial::ParameterConfig_(uint32_t baud_rate, uint32_t databits, uar
  * @param {type} 
  * @return: 
  */
-void HardwareSerial::begin(unsigned long baudrate){
-    init_();
-    ParameterConfig_(baudrate,8,UART_STOP_1, UART_PARITY_NONE);
-}
-
-/**
- * @description: 
- * @param {type} 
- * @return: 
- */
-void HardwareSerial::begin(unsigned long baudrate, uint16_t config){
-    init_();
-    ParameterConfig_(baudrate,8,UART_STOP_1, UART_PARITY_NONE);
+void HardwareSerial::begin(unsigned long baudrate, uint16_t config,uart_device_number_t uart_num_ , int rx_pin_, int tx_pin_){
+    init_(baudrate,config,uart_num_,rx_pin_,tx_pin_);
 }
 
 /**
@@ -149,7 +107,6 @@ void HardwareSerial::begin(unsigned long baudrate, uint16_t config){
  * @return: 
  */
 void HardwareSerial::end(){
-    sysctl_clock_disable(clock_);
     delete rb_;
 }
 
@@ -207,10 +164,7 @@ void HardwareSerial::flush(void){
  * @return: 
  */
 size_t HardwareSerial::write(uint8_t c){
-    while (!(uart_.LSR & (1u << 6)))
-        ;
-    uart_.THR = c;
-    return 1;
+    return uart_send_data(uart,(char*)&c,1);
 }
 
 /**
