@@ -16,12 +16,33 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+/**
+ * 为什么不用官方的uart.cpp
+ * 1, 不支持peek，flush
+ * 2, 需要支持Stream
+ * 
+ * TODO: settimeout需要优化
+*/
+
 #pragma once
 
 #include <inttypes.h>
 #include "Stream.h"
 #include <devices.h>
 #include <string.h>
+
+#include <FreeRTOS.h>
+#include <hal.h>
+#include <kernel/driver_impl.hpp>
+#include <plic.h>
+#include <semphr.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sysctl.h>
+#include <uart.h>
+#include "RingBuffer.h"
+
+
 
 // XXX: Those constants should be defined as const int / enums?
 // XXX: shall we use namespaces too?
@@ -91,7 +112,7 @@
 class HardwareSerial : public Stream
 {
   public:
-    HardwareSerial(int uart_nr);
+    HardwareSerial(uintptr_t base_addr, sysctl_clock_t clock, plic_irq_t irq);
     void begin(unsigned long);
     void begin(unsigned long baudrate, uint16_t config);
     void end();
@@ -102,9 +123,25 @@ class HardwareSerial : public Stream
     size_t write(uint8_t);
     using Print::write; // pull in write(str) and write(buf, size) from Print
     operator bool() const;
-  protected:
-    int _uart_nr;
-    handle_t file;
+
+  private:
+    static void on_irq_recv_callback_(void *userdata);
+    void init_(void);
+    void ParameterConfig_(uint32_t baud_rate, uint32_t databits, uart_stopbits_t stopbits, uart_parity_t parity) ;
+
+
+  private:
+    volatile uart_t &uart_;
+    sysctl_clock_t clock_;
+    plic_irq_t irq_;
+    SemaphoreHandle_t receive_event_;
+
+    unsigned long baudrate_;
+    uint16_t config_;
+
+    RingBuffer *rb_;
+
+    size_t read_timeout_ = portMAX_DELAY;
 };
 
 // XXX: Are we keeping the serialEvent API?
