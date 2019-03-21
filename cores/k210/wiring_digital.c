@@ -26,14 +26,13 @@
 
 
 #include "Arduino.h"
-#include <devices.h>
-#include <FreeRTOS.h>
-#include <task.h>
+#include "fpioa.h"
+#include "gpiohs.h"
+#include "sysctl.h"
 
 #ifdef __cplusplus
  extern "C" {
 #endif
-extern handle_t gio;
 
 /**
  * @description: Configures the specified pin to behave either as an input or an 
@@ -44,19 +43,29 @@ extern handle_t gio;
  *   complete description of the functionality.)
  * @return: Nothing
  */
-void pinMode( pin_size_t ulPin, PinMode ulMode ){
-    gpio_set_drive_mode(gio, ulPin, ulMode);
+void pinMode(pin_size_t pinNumber, PinMode pinMode){
+    fpioa_set_function(pinNumber, pin_map[pinNumber]);
+    gpiohs_set_drive_mode(pinNumber, pinMode);
 }
+
 
 /**
  * @description: Write a HIGH or a LOW value to a digital pin.
  * If the pin has been configured as an OUTPUT with pinMode(), its voltage will be
  *  set to the corresponding value: 5V (or 3.3V on 3.3V boards) for HIGH, 0V 
  *  (ground) for LOW.
- * If the pin is configured as an INPUT, digitalWrite() will enable (HIGH) or disable 
- * (LOW) the internal pullup on the input pin. It is recommended to set the pinMode()
- *  to INPUT_PULLUP to enable the internal pull-up resistor. See the digital pins 
- *  tutorial for more information.
+ * If the pin is configured as an #ifdef __cplusplus
+}
+#endifUT, digitalWrite() will enable (HIGH) or disable 
+ * (LOW) the internal pullup on th#ifdef __cplusplus
+}
+#endifnput pin. It is recommended to set the pinMode()
+ *  to INPUT_PULLUP to enable the #ifdef __cplusplus
+}
+#endifernal pull-up resistor. See the digital pins 
+ *  tutorial for more information.#ifdef __cplusplus
+}
+#endif
  * If you do not set the pinMode() to OUTPUT, and connect an LED to a pin, when calling 
  * digitalWrite(HIGH), the LED may appear dim. Without explicitly setting pinMode(), 
  * digitalWrite() will have enabled the internal pull-up resistor, which acts like a 
@@ -65,19 +74,18 @@ void pinMode( pin_size_t ulPin, PinMode ulMode ){
  * @param: HIGH or LOW
  * @return: Nothing
  */
-void digitalWrite( pin_size_t ulPin, PinStatus ulVal ){
-    gpio_set_pin_value(gio, ulPin, ulVal);
+void digitalWrite(pin_size_t pinNumber, PinStatus status){
+    gpiohs_set_pin(pinNumber,status);
 }
 
 /**
- * @description: Reads the value from a specified digital pin, either HIGH or LOW.
- * @param: The number of the digital pin you want to read
- * @return: HIGH or LOW
+ * @description: Reads define
+ * @param: The number odefine
+ * @return: HIGH or LOWdefine
  */
-PinStatus digitalRead( pin_size_t ulPin ){
-    return gpio_get_pin_value(gio, ulPin);
+PinStatus digitalRead(pin_size_t pinNumber){
+    return gpiohs_get_pin(pinNumber);
 }
-
 #ifdef __cplusplus
 }
 #endif

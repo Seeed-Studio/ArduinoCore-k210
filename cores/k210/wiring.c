@@ -29,7 +29,7 @@
 #include <task.h>
 #include "bsp.h"
 #include "sysctl.h"
-
+#include "plic.h"
 
 // the whole number of milliseconds per timer0 overflow
 #define MILLIS_INC 1000
@@ -78,6 +78,7 @@ void delayMicroseconds(unsigned int us){
 }
 
 
-void init(){
-
+void __attribute__((weak))  init(){
+    plic_init();
+    sysctl_enable_irq();
 }
