@@ -108,6 +108,7 @@ class HardwareSerial : public Stream
 {
   public:
     HardwareSerial();
+    virtual ~HardwareSerial(){}
     void begin(unsigned long baudrate, uart_device_number_t uart_num_ = UART_DEVICE_1, int rx_pin_ = 4, int tx_pin_ = 5);
     void begin(unsigned long baudrate, uint16_t config, uart_device_number_t uart_num_ = UART_DEVICE_1, int rx_pin_ = 4, int tx_pin_ = 5);
     void end();

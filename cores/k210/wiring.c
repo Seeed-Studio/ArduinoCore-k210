@@ -23,7 +23,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 #include <sleep.h>
 #include <FreeRTOS.h>
 #include <task.h>
@@ -33,7 +32,10 @@
 
 // the whole number of milliseconds per timer0 overflow
 #define MILLIS_INC 1000
-
+#ifdef MICROPYTHON
+extern  void mp_hal_delay_ms(uint64_t ms);
+extern  void mp_hal_delay_us(uint64_t us);
+#endif
 /**
  * Description: Returns the number of milliseconds passed since the Arduino 
  * board began running the current program. This number will overflow (go 
@@ -42,6 +44,7 @@
 unsigned long millis(){
     uint64_t v_cycle = read_cycle();
     return v_cycle * 1000 / sysctl_clock_get_freq(SYSCTL_CLOCK_CPU);
+
 }
 
 /**
@@ -62,8 +65,12 @@ unsigned long micros() {
  * specified as parameter. (There are 1000 milliseconds in a second.)
 */
 void delay(unsigned long ms){
+#ifndef MICROPYTHON
     //msleep(ms);
     vTaskDelay(ms / portTICK_RATE_MS);
+#else
+    mp_hal_delay_ms(ms);
+#endif
 }
 
 /**
@@ -74,7 +81,11 @@ void delay(unsigned long ms){
  * 
 */
 void delayMicroseconds(unsigned int us){
+#ifndef MICROPYTHON
     usleep(us);
+#else
+    mp_hal_delay_ms(us);
+#endif
 }
 
 
