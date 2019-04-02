@@ -30,7 +30,6 @@
 HardwareSerial Serial;
 #endif
 
-
 #define UART_BRATE_CONST 16
 #define RINGBUFF_LEN 64
 /**
@@ -38,10 +37,9 @@ HardwareSerial Serial;
  * @param {type} 
  * @return: 
  */
-HardwareSerial::HardwareSerial(){
-
+HardwareSerial::HardwareSerial()
+{
 }
-
 
 int HardwareSerial::on_irq_recv_callback_(void *userdata)
 {
@@ -59,17 +57,16 @@ int HardwareSerial::on_irq_recv_callback_(void *userdata)
     return 0;
 }
 
-
-void HardwareSerial::init_(unsigned long baudrate, uint16_t config, uart_device_number_t uart_num, int rx_pin, int tx_pin){
+void HardwareSerial::init_(unsigned long baudrate, uint16_t config, uart_device_number_t uart_num, int rx_pin, int tx_pin)
+{
     fpioa_set_function(rx_pin, pin_map[rx_pin]);
     fpioa_set_function(tx_pin, pin_map[tx_pin]);
 
     uart_init(uart_num);
-    uart_configure(uart_num, baudrate, 
-                            UART_BITWIDTH_8BIT, 
-                            uart_stopbit_t((config & SERIAL_STOP_BIT_MASK) >> 4), 
-                            uart_parity_t(config & SERIAL_PARITY_MASK)
-                            );
+    uart_configure(uart_num, baudrate,
+                   UART_BITWIDTH_8BIT,
+                   uart_stopbit_t((config & SERIAL_STOP_BIT_MASK) >> 4),
+                   uart_parity_t(config & SERIAL_PARITY_MASK));
 
     uart_set_receive_trigger(uart_num, UART_RECEIVE_FIFO_8);
     uart_irq_register(uart_num, UART_RECEIVE, on_irq_recv_callback_, this, 2);
@@ -82,14 +79,14 @@ void HardwareSerial::init_(unsigned long baudrate, uint16_t config, uart_device_
     uart = uart_num;
 }
 
-
 /**
  * @description: 
  * @param {type} 
  * @return: 
  */
-void HardwareSerial::begin(unsigned long baudrate , uart_device_number_t uart_num_ , int rx_pin_, int tx_pin_){
-    init_(baudrate,SERIAL_8N1,uart_num_,rx_pin_,tx_pin_);
+void HardwareSerial::begin(unsigned long baudrate, uart_device_number_t uart_num_, int rx_pin_, int tx_pin_)
+{
+    init_(baudrate, SERIAL_8N1, uart_num_, rx_pin_, tx_pin_);
 }
 
 /**
@@ -97,8 +94,9 @@ void HardwareSerial::begin(unsigned long baudrate , uart_device_number_t uart_nu
  * @param {type} 
  * @return: 
  */
-void HardwareSerial::begin(unsigned long baudrate, uint16_t config,uart_device_number_t uart_num_ , int rx_pin_, int tx_pin_){
-    init_(baudrate,config,uart_num_,rx_pin_,tx_pin_);
+void HardwareSerial::begin(unsigned long baudrate, uint16_t config, uart_device_number_t uart_num_, int rx_pin_, int tx_pin_)
+{
+    init_(baudrate, config, uart_num_, rx_pin_, tx_pin_);
 }
 
 /**
@@ -106,7 +104,8 @@ void HardwareSerial::begin(unsigned long baudrate, uint16_t config,uart_device_n
  * @param {type} 
  * @return: 
  */
-void HardwareSerial::end(){
+void HardwareSerial::end()
+{
     delete rb_;
 }
 
@@ -115,7 +114,8 @@ void HardwareSerial::end(){
  * @param {type} 
  * @return: 
  */
-int HardwareSerial::available(void){
+int HardwareSerial::available(void)
+{
     return rb_->available();
 }
 
@@ -124,7 +124,8 @@ int HardwareSerial::available(void){
  * @param {type} 
  * @return: 
  */
-int HardwareSerial::peek(void){
+int HardwareSerial::peek(void)
+{
     return rb_->peek();
 }
 
@@ -133,16 +134,22 @@ int HardwareSerial::peek(void){
  * @param {type} 
  * @return: 
  */
-int HardwareSerial::read(void){
-    while(true){
-        if(0 != rb_->available()){
+int HardwareSerial::read(void)
+{
+    while (true)
+    {
+        if (0 != rb_->available())
+        {
             return rb_->read_char();
         }
-        else{
-            if(xSemaphoreTake(receive_event_, read_timeout_) == pdTRUE){
+        else
+        {
+            if (xSemaphoreTake(receive_event_, read_timeout_) == pdTRUE)
+            {
                 continue;
             }
-            else{
+            else
+            {
                 return -1;
             }
         }
@@ -154,7 +161,8 @@ int HardwareSerial::read(void){
  * @param {type} 
  * @return: 
  */
-void HardwareSerial::flush(void){
+void HardwareSerial::flush(void)
+{
     rb_->clear();
 }
 
@@ -163,8 +171,9 @@ void HardwareSerial::flush(void){
  * @param {type} 
  * @return: 
  */
-size_t HardwareSerial::write(uint8_t c){
-    return uart_send_data(uart,(char*)&c,1);
+size_t HardwareSerial::write(uint8_t c)
+{
+    return uart_send_data(uart, (char *)&c, 1);
 }
 
 /**
@@ -172,6 +181,7 @@ size_t HardwareSerial::write(uint8_t c){
  * @param {type} 
  * @return: 
  */
-HardwareSerial::operator bool() const{
+HardwareSerial::operator bool() const
+{
     return true;
 }
