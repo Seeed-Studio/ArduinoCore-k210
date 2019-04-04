@@ -9,5 +9,5 @@ cmake .. -DPROJ=ArduinoCore-k210 -DTOOLCHAIN=/opt/kendryte-toolchain/bin && make
 
 # Additional Boards Manager URLs:
 ```
->https://raw.githubusercontent.com/Even-yuwei/platform/master/Seeed-K210-Pi/package_seeed-k210-pi_index.json
+https://raw.githubusercontent.com/Even-yuwei/platform/master/Seeed-K210-Pi/package_seeed-k210-pi_index.json
 ```
