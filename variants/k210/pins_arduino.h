@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <fpioa.h>
-#define LED_BUILTIN 3
+#define LED_BUILTIN 13
 
 fpioa_function_t __attribute__((weak)) pin_map[48] = {
     FUNC_DEBUG0, //0
