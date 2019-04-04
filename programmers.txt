@@ -1,0 +1,5 @@
+kflash.name=k-flash
+kflash.communication=usb
+kflash.program.params.verbose=-v
+kflash.program.params.quiet=-q
+kflash.program.tool=kflash
