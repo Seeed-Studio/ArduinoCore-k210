@@ -68,7 +68,10 @@ build.openocdcfg=
 ## recipe.hooks.prebuild.1.pattern.windows=SETX PATH C:\Users\Administrator\AppData\Local\Arduino15\packages\Seeeduino-Even\tools\riscv64-unknown-elf-gcc\8.2.0\bin;%PATH%"
 ## recipe.hooks.prebuild.1.pattern.linux=bash -c "[ -f {build.opt.sourcepath} ] || (mkdir -p {build.path}/sketch && touch {build.opt.path})"
 ## recipe.hooks.prebuild.1.pattern.macosx=bash -c "[ -f {build.opt.sourcepath} ] || (mkdir -p {build.path}/sketch && touch {build.opt.path})"
-compiler.kendryte.0.5.3.ldflags="{runtime.platform.path}/tools/libkendryte.a"
+
+## compiler.kendryte.0.5.3.ldflags="{runtime.platform.path}/tools/libkendryte.a"
+compiler.kendryte.0.5.3.ldflags="{runtime.tools.kendryte-libs.path}/libkendryte.a"
+
 # Compile patterns
 # ---------------------
 
