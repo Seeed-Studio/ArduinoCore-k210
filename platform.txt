@@ -13,8 +13,12 @@ compiler.warning_flags.more=-Wall
 compiler.warning_flags.all=-Wall -Wextra
 
 compiler.path={runtime.tools.riscv64-unknown-elf-gcc.path}/bin/
-compiler.c.cmd=riscv64-unknown-elf-gcc
-compiler.cpp.cmd=riscv64-unknown-elf-g++
+## Priority call riscv64-unknown-elf-gccX.bat
+## compiler.c.cmd=riscv64-unknown-elf-gcc
+compiler.c.cmd=riscv64-unknown-elf-gccX
+## Priority call riscv64-unknown-elf-g++X.bat
+## compiler.cpp.cmd=riscv64-unknown-elf-g++
+compiler.cpp.cmd=riscv64-unknown-elf-g++X
 compiler.ld.cmd=riscv64-unknown-elf-ld
 compiler.ar.cmd=riscv64-unknown-elf-ar
 compiler.objcopy.cmd=riscv64-unknown-elf-objcopy
@@ -65,7 +69,7 @@ build.usb_flags=
 build.openocdcfg=
 
 # Create empty {build.opt} if not exists in the sketch dir
-## recipe.hooks.prebuild.1.pattern.windows=SETX PATH C:\Users\Administrator\AppData\Local\Arduino15\packages\Seeeduino-Even\tools\riscv64-unknown-elf-gcc\8.2.0\bin;%PATH%"
+recipe.hooks.prebuild.1.pattern.windows=cmd /c echo @echo off > {compiler.path}/riscv64-unknown-elf-g++X.bat & echo SET PATH={compiler.path};%PATH% >> {compiler.path}/riscv64-unknown-elf-g++X.bat & echo %~d0%~p0\riscv64-unknown-elf-g++ %* >> {compiler.path}/riscv64-unknown-elf-g++X.bat & echo @echo off > {compiler.path}/riscv64-unknown-elf-gccX.bat & echo SET PATH={compiler.path};%PATH% >> {compiler.path}/riscv64-unknown-elf-gccX.bat & echo %~d0%~p0\riscv64-unknown-elf-gcc %* >> {compiler.path}/riscv64-unknown-elf-gccX.bat
 ## recipe.hooks.prebuild.1.pattern.linux=bash -c "[ -f {build.opt.sourcepath} ] || (mkdir -p {build.path}/sketch && touch {build.opt.path})"
 ## recipe.hooks.prebuild.1.pattern.macosx=bash -c "[ -f {build.opt.sourcepath} ] || (mkdir -p {build.path}/sketch && touch {build.opt.path})"
 
