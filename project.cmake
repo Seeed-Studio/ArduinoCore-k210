@@ -1,3 +1,7 @@
+if (MICROPYTHON)
+include(${CMAKE_CURRENT_LIST_DIR}/micropython.cmake)
+endif()
+
 FILE(GLOB_RECURSE PROJ_LIB_SRC_INO
     "${CMAKE_CURRENT_LIST_DIR}/libraries/built-in/*.ino"
     )
@@ -11,10 +15,15 @@ include_directories(${CMAKE_CURRENT_LIST_DIR}/variants/k210
                     ${CMAKE_CURRENT_LIST_DIR}/libraries/Wire
                     ${CMAKE_CURRENT_LIST_DIR}/libraries/Accelerometer_ADXL345
                     ${CMAKE_CURRENT_LIST_DIR}/libraries/ADS1115
+                    ${CMAKE_CURRENT_LIST_DIR}/libraries/micropython
                     ${SDK_ROOT}/third_party
                     ${SDK_ROOT}/lib/hal/include)
             
+if (MICROPYTHON)
+target_sources(${PROJECT_NAME} PUBLIC ${PROJ_LIB_SRC_INO} ${MICROPYTHON_SRC}  ${GENHDR}/qstrdefs.generated.h) 
+else()
 target_sources(${PROJECT_NAME} PUBLIC ${PROJ_LIB_SRC_INO})
+endif()
 
 if (LIBARDUINO)
 FILE(GLOB_RECURSE LIBARDUINO_SRC
