@@ -28,12 +28,13 @@
 #include "Arduino.h"
 #include <FreeRTOS.h>
 #include <task.h>
-void run_main_loop(void *ctx){
+void __attribute__((weak)) run_main_loop(void *ctx)
+{
     setup();
     for (;;)
     {
         loop();
-    }   
+    }
 }
 
 int main()
@@ -42,6 +43,6 @@ int main()
     init();
     xTaskCreate(run_main_loop, "run_main_loop", 2048, NULL, 1, NULL);
     vTaskStartScheduler();
-    while(1)
-    ;
+    while (1)
+        ;
 }
