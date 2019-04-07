@@ -23,9 +23,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-#include "pins_arduino.h"
+#include "Arduino.h"
 #include "gpiohs.h"
-#include "WInterrupts.h"
 
 int gpiohs_irq_callback_t(void *ctx){
     voidFuncPtr func = ctx;
@@ -37,16 +36,24 @@ int gpiohs_irq_callback_t(void *ctx){
  * \brief Specifies a named Interrupt Service Routine (ISR) to call when an interrupt occurs.
  *        Replaces any previous function that was attached to the interrupt.
  */
-void attachInterrupt(uint32_t pin, voidFuncPtr callback, uint32_t mode){
+void attachInterrupt(pin_size_t pin, voidFuncPtr callback, PinStatus mode){
     fpioa_set_function(pin, pin_map[pin]);
     gpiohs_set_drive_mode(pin, GPIO_DM_INPUT_PULL_UP);
     gpiohs_set_pin_edge(pin, GPIO_PE_BOTH);
 
     gpiohs_irq_register(pin, 1, gpiohs_irq_callback_t, callback);
 }
+
+void attachInterruptParam(pin_size_t pin, voidFuncPtrParam callback, PinStatus mode, void* param){
+    fpioa_set_function(pin, pin_map[pin]);
+    gpiohs_set_drive_mode(pin, GPIO_DM_INPUT_PULL_UP);
+    gpiohs_set_pin_edge(pin, GPIO_PE_BOTH);
+
+    gpiohs_irq_register(pin, 1, callback, param);
+}
 /*
  * \brief Turns off the given interrupt.
  */
-void detachInterrupt(uint32_t pin){
+void detachInterrupt(pin_size_t pin){
     gpiohs_irq_unregister(pin);
 }
