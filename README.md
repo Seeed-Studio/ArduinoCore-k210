@@ -6,3 +6,8 @@ git clone https://github.com/seeed-Studio/ArduinoCore-k210 kendryte-freertos-sdk
 mkdir build && cd build
 cmake .. -DPROJ=ArduinoCore-k210 -DTOOLCHAIN=/opt/kendryte-toolchain/bin && make -j8
 ```
+
+# Additional Boards Manager URLs:
+```
+https://raw.githubusercontent.com/Even-yuwei/BoardsManagerFiles/master/Kendryte/package_seeed-k210-pi_index.json
+```
