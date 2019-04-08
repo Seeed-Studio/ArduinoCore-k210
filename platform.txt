@@ -1,0 +1,146 @@
+# The MIT License (MIT)
+
+# Copyright (c) 2019 Seeed Technology Inc.
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+
+
+# Seeed Kendryte K210
+# For more info:
+# https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5-3rd-party-Hardware-specification
+# https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.6.x-package_index.json-format-specification
+
+
+name = Grove AI HAT for Edge Computing
+version = 0.2.3
+
+# arch
+arch              = k210
+arch_for_c_cpp    = K210
+
+# Compile variables
+compiler.warning_flags=-w
+compiler.warning_flags.none=-w
+compiler.warning_flags.default=
+compiler.warning_flags.more=-Wall
+compiler.warning_flags.all=-Wall -Wextra
+
+compiler.path={runtime.tools.riscv64-unknown-elf-gcc.path}/bin/
+## Priority call riscv64-unknown-elf-gccX.bat
+## compiler.c.cmd=riscv64-unknown-elf-gcc
+compiler.c.cmd=riscv64-unknown-elf-gccX
+## Priority call riscv64-unknown-elf-g++X.bat
+## compiler.cpp.cmd=riscv64-unknown-elf-g++
+compiler.cpp.cmd=riscv64-unknown-elf-g++X
+compiler.ld.cmd=riscv64-unknown-elf-ld
+compiler.ar.cmd=riscv64-unknown-elf-ar
+compiler.objcopy.cmd=riscv64-unknown-elf-objcopy
+compiler.elf2hex.cmd=riscv64-unknown-elf-objcopy
+compiler.size.cmd=riscv64-unknown-elf-size
+
+compiler.clib.path={runtime.tools.riscv64-unknown-elf-gcc.path}/include
+compiler.sdk.path={runtime.tools.kendryte-standalone-sdk.path}/lib
+compiler.cores.path={runtime.platform.path}/cores/k210
+compiler.cores.deprecated.path={runtime.platform.path}/cores/k210/deprecated/
+compiler.cores.deprecated-avr-comp.path={runtime.platform.path}/cores/k210/deprecated-avr-comp/
+
+compiler.preproc.flags=-I{build.system.path}/include -I{compiler.cores.path} -I{compiler.cores.deprecated.path} -I{compiler.cores.deprecated-avr-comp.path} -I{compiler.sdk.path}/bsp/include -I{compiler.sdk.path}/drivers/include -I{compiler.sdk.path}/utils/include -I{compiler.sdk.path}/freertos/conf -I{compiler.sdk.path}/freertos/include -I{compiler.sdk.path}/freertos/portable -I{compiler.clib.path}
+
+compiler.both.flags=-mcmodel=medany -mabi=lp64f -march=rv64imafc -fno-common -ffunction-sections -fdata-sections -fstrict-volatile-bitfields -fno-zero-initialized-in-bss -Os -ggdb -Wall -Werror=all -Wno-error=unused-function -Wno-error=unused-but-set-variable -Wno-error=unused-variable -Wno-error=deprecated-declarations -Wextra -Werror=frame-larger-than=65536 -Wno-unused-parameter -Wno-sign-compare -Wno-error=missing-braces -Wno-error=return-type -Wno-error=pointer-sign -Wno-missing-braces -Wno-strict-aliasing -Wno-implicit-fallthrough -Wno-missing-field-initializers -Wno-int-to-pointer-cast -Wno-error=comment -Wno-error=logical-not-parentheses -Wno-error=duplicate-decl-specifier -Wno-error=parentheses -lpthread
+
+compiler.debug.flags=-DCONFIG_LOG_ENABLE -DCONFIG_LOG_LEVEL=LOG_INFO -DDEBUG=1 -D__riscv64
+
+compiler.c.flags=-c {compiler.debug.flags} {compiler.both.flags} {compiler.preproc.flags} -std=gnu11 -Wno-pointer-to-int-cast -Wno-old-style-declaration -g -Wno-error=unused-variable -Wno-error=unused-function -Wno-error=unused-const-variable
+
+compiler.cpp.flags=-c {compiler.debug.flags} {compiler.both.flags} {compiler.preproc.flags} -std=gnu++17 -g -Wno-error=unused-variable -Wno-error=unused-function -Wno-error=unused-const-variable
+
+compiler.ld.flags=-mcmodel=medany -mabi=lp64f -march=rv64imafc -fno-common -ffunction-sections -fdata-sections -fstrict-volatile-bitfields -fno-zero-initialized-in-bss -Os -ggdb -g -nostartfiles -static -Wl,--gc-sections -Wl,-static -Wl,--start-group -Wl,--whole-archive -Wl,--no-whole-archive -Wl,--end-group -Wl,-EL -Wl,--no-relax -T {build.ldscript}
+
+compiler.S.flags=-c {compiler.debug.flags} {compiler.both.flags} {compiler.preproc.flags} -g -x assembler-with-cpp -D __riscv64
+
+compiler.ar.flags=rcs
+
+compiler.objcopy.eep.flags=
+
+compiler.elf2hex.flags=-R .rel.dyn
+
+compiler.define=-DARDUINO=
+
+compiler.c.extra_flags=-DF_CPU={build.f_cpu} -D{build.board} -D{arch_for_c_cpp} -DARCH={arch_for_c_cpp}
+compiler.c.elf.extra_flags=
+compiler.cpp.extra_flags=-DF_CPU={build.f_cpu} -D{build.board} -D{arch_for_c_cpp} -DARCH={arch_for_c_cpp}
+compiler.S.extra_flags=-DF_CPU={build.f_cpu} -D{build.board}
+compiler.ar.extra_flags=
+compiler.elf2hex.extra_flags=
+
+# Can be overridden in boards.txt
+build.extra_flags=
+
+# USB Flags
+# ---------
+build.usb_flags=
+build.openocdcfg=
+
+# Create empty {build.opt} if not exists in the sketch dir
+recipe.hooks.prebuild.1.pattern.windows=cmd /c echo @echo off > {compiler.path}/riscv64-unknown-elf-g++X.bat & echo SET PATH={compiler.path};%PATH% >> {compiler.path}/riscv64-unknown-elf-g++X.bat & echo %~d0%~p0\riscv64-unknown-elf-g++ %* >> {compiler.path}/riscv64-unknown-elf-g++X.bat & echo @echo off > {compiler.path}/riscv64-unknown-elf-gccX.bat & echo SET PATH={compiler.path};%PATH% >> {compiler.path}/riscv64-unknown-elf-gccX.bat & echo %~d0%~p0\riscv64-unknown-elf-gcc %* >> {compiler.path}/riscv64-unknown-elf-gccX.bat
+## recipe.hooks.prebuild.1.pattern.linux=bash -c "[ -f {build.opt.sourcepath} ] || (mkdir -p {build.path}/sketch && touch {build.opt.path})"
+## recipe.hooks.prebuild.1.pattern.macosx=bash -c "[ -f {build.opt.sourcepath} ] || (mkdir -p {build.path}/sketch && touch {build.opt.path})"
+
+## compiler.kendryte.0.5.3.ldflags="{runtime.platform.path}/tools/libkendryte.a"
+compiler.kendryte.0.5.3.ldflags="{runtime.tools.kendryte-libs.path}/libkendryte.a"
+
+# Compile patterns
+# ---------------------
+
+## Compile S files
+recipe.S.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.S.flags} -DARDUINO={runtime.ide.version} {compiler.S.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+
+## Compile c files
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -DARDUINO={runtime.ide.version} {compiler.c.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+
+## Compile c++ files
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -DARDUINO={runtime.ide.version} {compiler.cpp.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+
+## Create archives
+recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} {compiler.ar.extra_flags} "{archive_file_path}" "{object_file}"
+
+## Link gc-sections, archives, and objects
+recipe.c.combine.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.ld.flags} {build.extra_flags}  {object_files} -o "{build.path}/{build.project_name}.elf" -Wl,--start-group -lgcc -lm -lc -Wl,--end-group -Wl,--start-group "{archive_file_path}" {compiler.kendryte.0.5.3.ldflags} -lgcc -lm -lc -Wl,--end-group
+
+## Create binary
+recipe.objcopy.eep.pattern="{compiler.path}{compiler.objcopy.cmd}" {compiler.objcopy.eep.flags} --output-format=binary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+
+## Create hex
+recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} -O srec "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+
+## Compute size
+recipe.size.pattern="{compiler.path}{compiler.size.cmd}" -B "{build.path}/{build.project_name}.elf"
+recipe.size.regex=\s*[0-9]+\s+[0-9]+\s+[0-9]+\s+([0-9]+).*
+
+
+# Uploader tools
+# -------------------
+
+tools.kflash.path={runtime.tools.kflash.path}/
+tools.kflash.cmd=python3 {runtime.tools.kflash.path}/kflash.py
+tools.kflash.cmd.windows={runtime.tools.kflash.path}/kflash_py
+tools.kflash.program.pattern={cmd} -n -p {serial.port} -b {build.burn_baudrate} -B {build.burn_tool_firmware} {build.path}/{build.project_name}.bin
+tools.kflash.program.pattern.windows="{cmd}" -n -p {serial.port} -b {build.burn_baudrate} -B {build.burn_tool_firmware} {build.path}/{build.project_name}.bin
+
+
