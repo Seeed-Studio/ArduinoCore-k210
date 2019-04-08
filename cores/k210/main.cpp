@@ -28,7 +28,7 @@
 #include "Arduino.h"
 #include <FreeRTOS.h>
 #include <task.h>
-void __attribute__((weak)) run_main_loop(void *ctx)
+void run_main_loop(void *ctx)
 {
     setup();
     for (;;)
@@ -37,7 +37,7 @@ void __attribute__((weak)) run_main_loop(void *ctx)
     }
 }
 
-int main()
+int __attribute__((weak)) main()
 {
     /*init timer0 counter*/
     init();
