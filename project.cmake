@@ -13,6 +13,7 @@ add_definitions(-DARDUINO=1000 )
 include_directories(${CMAKE_CURRENT_LIST_DIR}/variants/k210
                     ${CMAKE_CURRENT_LIST_DIR}/cores/k210
                     ${CMAKE_CURRENT_LIST_DIR}/libraries/Wire
+                    ${CMAKE_CURRENT_LIST_DIR}/libraries/SPI
                     ${CMAKE_CURRENT_LIST_DIR}/libraries/Accelerometer_ADXL345
                     ${CMAKE_CURRENT_LIST_DIR}/libraries/ADS1115
                     ${CMAKE_CURRENT_LIST_DIR}/libraries/micropython
