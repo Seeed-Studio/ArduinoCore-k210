@@ -102,8 +102,7 @@ recipe.hooks.prebuild.1.pattern.windows=cmd /c echo @echo off > {compiler.path}/
 recipe.hooks.prebuild.1.pattern.linux=bash -c "cp {compiler.path}/riscv64-unknown-elf-g++ {compiler.path}/riscv64-unknown-elf-g++X && cp {compiler.path}/riscv64-unknown-elf-gcc {compiler.path}/riscv64-unknown-elf-gccX"
 recipe.hooks.prebuild.1.pattern.macosx=bash -c "cp {compiler.path}/riscv64-unknown-elf-g++ {compiler.path}/riscv64-unknown-elf-g++X && cp {compiler.path}/riscv64-unknown-elf-gcc {compiler.path}/riscv64-unknown-elf-gccX"
 
-## compiler.kendryte.0.5.3.ldflags="{runtime.platform.path}/tools/libkendryte.a"
-compiler.kendryte.0.5.3.ldflags="{runtime.platform.path}/tools/libkendryte.a"
+compiler.kendryte.0.5.3.ldflags="{runtime.platform.path}/tools/sdk/libkendryte.a"
 
 # Compile patterns
 # ---------------------
@@ -138,7 +137,8 @@ recipe.size.regex=\s*[0-9]+\s+[0-9]+\s+[0-9]+\s+([0-9]+).*
 # -------------------
 
 tools.kflash.path={runtime.tools.kflash.path}/
-tools.kflash.cmd={runtime.tools.kflash.path}/kflash_py
+tools.kflash.cmd.linux={runtime.tools.kflash.path}/kflash.py
+tools.kflash.cmd.windows={runtime.tools.kflash.path}/kflash_py
 tools.kflash.cmd.macosx=/usr/local/bin/python3 {runtime.tools.kflash.path}/kflash.py
 tools.kflash.program.pattern={cmd} -n -p {serial.port} -b {build.burn_baudrate} -B {build.burn_tool_firmware} {build.path}/{build.project_name}.bin
 tools.kflash.program.pattern.windows="{cmd}" -n -p {serial.port} -b {build.burn_baudrate} -B {build.burn_tool_firmware} {build.path}/{build.project_name}.bin
