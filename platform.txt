@@ -31,8 +31,8 @@ name = Grove AI HAT for Edge Computing
 version = 0.2.3
 
 # arch
-arch              = k210
-arch_for_c_cpp    = K210
+arch              = riscv64
+arch_for_c_cpp    = riscv64
 
 # Compile variables
 compiler.warning_flags=-w
@@ -99,11 +99,11 @@ build.openocdcfg=
 
 # Create empty {build.opt} if not exists in the sketch dir
 recipe.hooks.prebuild.1.pattern.windows=cmd /c echo @echo off > {compiler.path}/riscv64-unknown-elf-g++X.bat & echo SET PATH={compiler.path};%PATH% >> {compiler.path}/riscv64-unknown-elf-g++X.bat & echo %~d0%~p0\riscv64-unknown-elf-g++ %* >> {compiler.path}/riscv64-unknown-elf-g++X.bat & echo @echo off > {compiler.path}/riscv64-unknown-elf-gccX.bat & echo SET PATH={compiler.path};%PATH% >> {compiler.path}/riscv64-unknown-elf-gccX.bat & echo %~d0%~p0\riscv64-unknown-elf-gcc %* >> {compiler.path}/riscv64-unknown-elf-gccX.bat
-## recipe.hooks.prebuild.1.pattern.linux=bash -c "[ -f {build.opt.sourcepath} ] || (mkdir -p {build.path}/sketch && touch {build.opt.path})"
-## recipe.hooks.prebuild.1.pattern.macosx=bash -c "[ -f {build.opt.sourcepath} ] || (mkdir -p {build.path}/sketch && touch {build.opt.path})"
+recipe.hooks.prebuild.1.pattern.linux=bash -c "cp {compiler.path}/riscv64-unknown-elf-g++ {compiler.path}/riscv64-unknown-elf-g++X && cp {compiler.path}/riscv64-unknown-elf-gcc {compiler.path}/riscv64-unknown-elf-gccX"
+recipe.hooks.prebuild.1.pattern.macosx=bash -c "cp {compiler.path}/riscv64-unknown-elf-g++ {compiler.path}/riscv64-unknown-elf-g++X && cp {compiler.path}/riscv64-unknown-elf-gcc {compiler.path}/riscv64-unknown-elf-gccX"
 
 ## compiler.kendryte.0.5.3.ldflags="{runtime.platform.path}/tools/libkendryte.a"
-compiler.kendryte.0.5.3.ldflags="{runtime.tools.kendryte-libs.path}/libkendryte.a"
+compiler.kendryte.0.5.3.ldflags="{runtime.platform.path}/tools/libkendryte.a"
 
 # Compile patterns
 # ---------------------
@@ -138,8 +138,8 @@ recipe.size.regex=\s*[0-9]+\s+[0-9]+\s+[0-9]+\s+([0-9]+).*
 # -------------------
 
 tools.kflash.path={runtime.tools.kflash.path}/
-tools.kflash.cmd=python3 {runtime.tools.kflash.path}/kflash.py
-tools.kflash.cmd.windows={runtime.tools.kflash.path}/kflash_py
+tools.kflash.cmd={runtime.tools.kflash.path}/kflash_py
+tools.kflash.cmd.macosx=/usr/local/bin/python3 {runtime.tools.kflash.path}/kflash.py
 tools.kflash.program.pattern={cmd} -n -p {serial.port} -b {build.burn_baudrate} -B {build.burn_tool_firmware} {build.path}/{build.project_name}.bin
 tools.kflash.program.pattern.windows="{cmd}" -n -p {serial.port} -b {build.burn_baudrate} -B {build.burn_tool_firmware} {build.path}/{build.project_name}.bin
 
