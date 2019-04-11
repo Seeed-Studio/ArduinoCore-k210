@@ -104,7 +104,7 @@ int __attribute__((weak)) pwm_callback(void *ctx)
 void tone(uint8_t _pin, unsigned int frequency, unsigned long duration)
 {
     /* Init FPIOA pin mapping for PWM*/
-    fpioa_set_function(_pin, pin_map[_pin]);
+    fpioa_set_function(_pin, pin_map[_pin].PinType[PIO_TIMER]);
     /* Init timer */
     timer_init(TIMER_NOR);
     /* Set timer interval to 10ms (1e7ns) */

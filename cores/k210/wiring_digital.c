@@ -24,17 +24,17 @@
  * THE SOFTWARE.
  */
 
-
 #include "Arduino.h"
 #include "fpioa.h"
 #include "gpiohs.h"
 #include "sysctl.h"
 
 #ifdef __cplusplus
- extern "C" {
+extern "C"
+{
 #endif
 
-/**
+    /**
  * @description: Configures the specified pin to behave either as an input or an 
  * output. See the description of (digital pins) for details on the functionality
  *  of the pins.
@@ -43,13 +43,13 @@
  *   complete description of the functionality.)
  * @return: Nothing
  */
-void pinMode(pin_size_t pinNumber, PinMode pinMode){
-    fpioa_set_function(pinNumber, pin_map[pinNumber]);
-    gpiohs_set_drive_mode(pinNumber, pinMode);
-}
+    void pinMode(pin_size_t pinNumber, PinMode pinMode)
+    {
+        fpioa_set_function(pinNumber, pin_map[pinNumber].PinType[PIO_GPIOHS]);
+        gpiohs_set_drive_mode(pinNumber, pinMode);
+    }
 
-
-/**
+    /**
  * @description: Write a HIGH or a LOW value to a digital pin.
  * If the pin has been configured as an OUTPUT with pinMode(), its voltage will be
  *  set to the corresponding value: 5V (or 3.3V on 3.3V boards) for HIGH, 0V 
@@ -74,18 +74,20 @@ void pinMode(pin_size_t pinNumber, PinMode pinMode){
  * @param: HIGH or LOW
  * @return: Nothing
  */
-void digitalWrite(pin_size_t pinNumber, PinStatus status){
-    gpiohs_set_pin(pinNumber,status);
-}
+    void digitalWrite(pin_size_t pinNumber, PinStatus status)
+    {
+        gpiohs_set_pin(pinNumber, status);
+    }
 
-/**
+    /**
  * @description: Reads define
  * @param: The number odefine
  * @return: HIGH or LOWdefine
  */
-PinStatus digitalRead(pin_size_t pinNumber){
-    return gpiohs_get_pin(pinNumber);
-}
+    PinStatus digitalRead(pin_size_t pinNumber)
+    {
+        return gpiohs_get_pin(pinNumber);
+    }
 #ifdef __cplusplus
 }
 #endif

@@ -37,7 +37,7 @@ int gpiohs_irq_callback_t(void *ctx){
  *        Replaces any previous function that was attached to the interrupt.
  */
 void attachInterrupt(pin_size_t pin, voidFuncPtr callback, PinStatus mode){
-    fpioa_set_function(pin, pin_map[pin]);
+    fpioa_set_function(pin, pin_map[pin].PinType[PIO_GPIOHS]);
     gpiohs_set_drive_mode(pin, GPIO_DM_INPUT_PULL_UP);
     gpiohs_set_pin_edge(pin, GPIO_PE_BOTH);
 
@@ -45,7 +45,7 @@ void attachInterrupt(pin_size_t pin, voidFuncPtr callback, PinStatus mode){
 }
 
 void attachInterruptParam(pin_size_t pin, voidFuncPtrParam callback, PinStatus mode, void* param){
-    fpioa_set_function(pin, pin_map[pin]);
+    fpioa_set_function(pin, pin_map[pin].PinType[PIO_GPIOHS]);
     gpiohs_set_drive_mode(pin, GPIO_DM_INPUT_PULL_UP);
     gpiohs_set_pin_edge(pin, GPIO_PE_BOTH);
 

@@ -59,8 +59,8 @@ int HardwareSerial::on_irq_recv_callback_(void *userdata)
 
 void HardwareSerial::init_(unsigned long baudrate, uint16_t config, uart_device_number_t uart_num, int rx_pin, int tx_pin)
 {
-    fpioa_set_function(rx_pin, pin_map[rx_pin]);
-    fpioa_set_function(tx_pin, pin_map[tx_pin]);
+    fpioa_set_function(rx_pin, pin_map[rx_pin].PinType[PIO_UART]);
+    fpioa_set_function(tx_pin, pin_map[tx_pin].PinType[PIO_UART]);
 
     uart_init(uart_num);
     uart_configure(uart_num, baudrate,

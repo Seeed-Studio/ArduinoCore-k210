@@ -29,50 +29,99 @@ menu.toolsloc            = Tool Install Location
 ##################################################
 ############# Seeed K210 Pi ###############
 
-m1.name = Seeed K210 Pi
-## m1.vid.0=0x1A86
-## m1.pid.0=0x7523
+seeed_k210_pi.name=Seeed K210 Pi
+## seeed_k210_pi.vid.0=0x1A86
+## seeed_k210_pi.pid.0=0x7523
 
 ## Toolchain
-m1.menu.toolsloc.default=Default
-m1.menu.toolsloc.default.compiler.path={runtime.tools.riscv64-unknown-elf-gcc.path}/bin/
+seeed_k210_pi.menu.toolsloc.default=Default
+seeed_k210_pi.menu.toolsloc.default.compiler.path={runtime.tools.riscv64-unknown-elf-gcc.path}/bin/
 
 ## CPU Clock
-m1.menu.clksrc.400 = 400MHz CPU Clock Frequency
-m1.menu.clksrc.500 = 500MHz CPU Clock Frequency
-m1.menu.clksrc.600 = 600MHz CPU Clock Frequency
-m1.menu.clksrc.400.build.f_cpu = 400000000L
-m1.menu.clksrc.500.build.f_cpu = 500000000L
-m1.menu.clksrc.600.build.f_cpu = 600000000L
+seeed_k210_pi.menu.clksrc.400=400MHz CPU Clock Frequency
+seeed_k210_pi.menu.clksrc.500=500MHz CPU Clock Frequency
+seeed_k210_pi.menu.clksrc.600=600MHz CPU Clock Frequency
+seeed_k210_pi.menu.clksrc.400.build.f_cpu=400000000L
+seeed_k210_pi.menu.clksrc.500.build.f_cpu=500000000L
+seeed_k210_pi.menu.clksrc.600.build.f_cpu=600000000L
 
 ## Burn baud rate
-m1.menu.burn_baudrate.2000000 = 2 Mbps
-m1.menu.burn_baudrate.1500000 = 1.5 Mbps
-m1.menu.burn_baudrate.1000000 = 1 Mbps
-m1.menu.burn_baudrate.2000000.build.burn_baudrate = 2000000
-m1.menu.burn_baudrate.1500000.build.burn_baudrate = 1500000
-m1.menu.burn_baudrate.1000000.build.burn_baudrate = 1000000
+seeed_k210_pi.menu.burn_baudrate.2000000=2 Mbps
+seeed_k210_pi.menu.burn_baudrate.1500000=1.5 Mbps
+seeed_k210_pi.menu.burn_baudrate.1000000=1 Mbps
+seeed_k210_pi.menu.burn_baudrate.2000000.build.burn_baudrate=2000000
+seeed_k210_pi.menu.burn_baudrate.1500000.build.burn_baudrate=1500000
+seeed_k210_pi.menu.burn_baudrate.1000000.build.burn_baudrate=1000000
 
 ## Burn tool firmware
-m1.menu.burn_tool_firmware.dan = Default
-m1.menu.burn_tool_firmware.dan.build.burn_tool_firmware = dan
+seeed_k210_pi.menu.burn_tool_firmware.dan=Default
+seeed_k210_pi.menu.burn_tool_firmware.dan.build.burn_tool_firmware=dan
 
 ## Point to the file for ./variants/<variant>/pins_arduino.h
-m1.build.variant=k210
+seeed_k210_pi.build.variant=seeed_k210_pi
 
 ## "The 'core' file directory for this board, in ./cores
-m1.build.core=k210
+seeed_k210_pi.build.core=k210
 
 ## This sets a define for use in the compiled code.
-m1.build.board = BOARD_SEEED_K210_PI
-m1.build.sdata.size=512
+seeed_k210_pi.build.board=BOARD_SEEED_K210_PI
+seeed_k210_pi.build.sdata.size=512
 
 ## This selects the tool from "programmers.txt"
-m1.program.tool=kflash
-m1.upload.tool=kflash
+seeed_k210_pi.program.tool=kflash
+seeed_k210_pi.upload.tool=kflash
 
 ## Limit is the 16MB Flash. Assume half is used for something else.
-m1.upload.maximum_size=8388608
-m1.build.ldscript={runtime.tools.kendryte-standalone-sdk.path}/lds/kendryte.ld
+seeed_k210_pi.upload.maximum_size=8388608
+seeed_k210_pi.build.ldscript={runtime.tools.kendryte-standalone-sdk.path}/lds/kendryte.ld
 
+
+##################################################
+############# Maix Bit ###############
+
+maix_bit.name=Maix Bit
+## maix_bit.vid.0=0x1A86
+## maix_bit.pid.0=0x7523
+
+## Toolchain
+maix_bit.menu.toolsloc.default=Default
+maix_bit.menu.toolsloc.default.compiler.path={runtime.tools.riscv64-unknown-elf-gcc.path}/bin/
+
+## CPU Clock
+maix_bit.menu.clksrc.400=400MHz CPU Clock Frequency
+maix_bit.menu.clksrc.500=500MHz CPU Clock Frequency
+maix_bit.menu.clksrc.600=600MHz CPU Clock Frequency
+maix_bit.menu.clksrc.400.build.f_cpu=400000000L
+maix_bit.menu.clksrc.500.build.f_cpu=500000000L
+maix_bit.menu.clksrc.600.build.f_cpu=600000000L
+
+## Burn baud rate
+maix_bit.menu.burn_baudrate.2000000=2 Mbps
+maix_bit.menu.burn_baudrate.1500000=1.5 Mbps
+maix_bit.menu.burn_baudrate.1000000=1 Mbps
+maix_bit.menu.burn_baudrate.2000000.build.burn_baudrate=2000000
+maix_bit.menu.burn_baudrate.1500000.build.burn_baudrate=1500000
+maix_bit.menu.burn_baudrate.1000000.build.burn_baudrate=1000000
+
+## Burn tool firmware
+maix_bit.menu.burn_tool_firmware.dan=Default
+maix_bit.menu.burn_tool_firmware.dan.build.burn_tool_firmware=dan
+
+## Point to the file for ./variants/<variant>/pins_arduino.h
+maix_bit.build.variant=maix_bit
+
+## "The 'core' file directory for this board, in ./cores
+maix_bit.build.core=k210
+
+## This sets a define for use in the compiled code.
+maix_bit.build.board=BOARD_MAIX_BIT
+maix_bit.build.sdata.size=512
+
+## This selects the tool from "programmers.txt"
+maix_bit.program.tool=kflash
+maix_bit.upload.tool=kflash
+
+## Limit is the 16MB Flash. Assume half is used for something else.
+maix_bit.upload.maximum_size=8388608
+maix_bit.build.ldscript={runtime.tools.kendryte-standalone-sdk.path}/lds/kendryte.ld
 
