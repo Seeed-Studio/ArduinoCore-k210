@@ -120,8 +120,8 @@ recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -D
 recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} {compiler.ar.extra_flags} "{archive_file_path}" "{object_file}"
 
 ## Link gc-sections, archives, and objects
-recipe.c.combine.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.ld.flags} {build.extra_flags}  {object_files} -o "{build.path}/{build.project_name}.elf" -Wl,--start-group -lgcc -lm -lc -Wl,--end-group -Wl,--start-group "{archive_file_path}" {compiler.kendryte.0.5.3.ldflags} -lgcc -lm -lc -Wl,--end-group
-
+## recipe.c.combine.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.ld.flags} {build.extra_flags}  {object_files} -o "{build.path}/{build.project_name}.elf" -Wl,--start-group -lgcc -lm -lc -Wl,--end-group -Wl,--start-group "{archive_file_path}" {compiler.kendryte.0.5.3.ldflags} -lgcc -lm -lc -Wl,--end-group
+recipe.c.combine.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.ld.flags} {build.extra_flags}  {object_files} {runtime.tools.riscv64-unknown-elf-gcc.path}/lib/gcc/riscv64-unknown-elf/8.2.0/crti.o {runtime.tools.riscv64-unknown-elf-gcc.path}/lib/gcc/riscv64-unknown-elf/8.2.0/crtbegin.o {runtime.tools.riscv64-unknown-elf-gcc.path}/lib/gcc/riscv64-unknown-elf/8.2.0/crtend.o {runtime.tools.riscv64-unknown-elf-gcc.path}/lib/gcc/riscv64-unknown-elf/8.2.0/crtn.o   -o "{build.path}/{build.project_name}.elf" -Wl,--start-group -lgcc -lm -lc -Wl,--end-group -Wl,--start-group "{archive_file_path}" {compiler.kendryte.0.5.3.ldflags} -lgcc -lm -lc -Wl,--end-group
 ## Create binary
 recipe.objcopy.eep.pattern="{compiler.path}{compiler.objcopy.cmd}" {compiler.objcopy.eep.flags} --output-format=binary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
 

@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 #include <fpioa.h>
-#define LED_BUILTIN 13
+#define LED_BUILTIN 14
 typedef enum _EPioType
 {
     PIO_GPIO = 0,
@@ -132,7 +132,7 @@ PinDescription __attribute__((weak)) pin_map[] = {
     {
         //8
         FUNC_DEBUG0,  //PIO_GPIO
-        FUNC_GPIOHS0, //PIO_GPIOHS
+        FUNC_GPIOHS8, //PIO_GPIOHS
         FUNC_DEBUG0,  //PIO_I2C
         FUNC_DEBUG0,  //PIO_SPI
         FUNC_DEBUG0,  //PIO_UART
@@ -145,7 +145,7 @@ PinDescription __attribute__((weak)) pin_map[] = {
     {
         //9
         FUNC_DEBUG0,  //PIO_GPIO
-        FUNC_GPIOHS1, //PIO_GPIOHS
+        FUNC_GPIOHS9, //PIO_GPIOHS
         FUNC_DEBUG0,  //PIO_I2C
         FUNC_DEBUG0,  //PIO_SPI
         FUNC_DEBUG0,  //PIO_UART
@@ -158,7 +158,7 @@ PinDescription __attribute__((weak)) pin_map[] = {
     {
         //10
         FUNC_DEBUG0,  //PIO_GPIO
-        FUNC_GPIOHS2, //PIO_GPIOHS
+        FUNC_GPIOHS10, //PIO_GPIOHS
         FUNC_DEBUG0,  //PIO_I2C
         FUNC_DEBUG0,  //PIO_SPI
         FUNC_DEBUG0,  //PIO_UART
@@ -197,7 +197,7 @@ PinDescription __attribute__((weak)) pin_map[] = {
     {
         //13
         FUNC_DEBUG0,  //PIO_GPIO
-        FUNC_GPIOHS3, //PIO_GPIOHS
+        FUNC_GPIOHS13, //PIO_GPIOHS
         FUNC_DEBUG0,  //PIO_I2C
         FUNC_DEBUG0,  //PIO_SPI
         FUNC_DEBUG0,  //PIO_UART
@@ -210,7 +210,7 @@ PinDescription __attribute__((weak)) pin_map[] = {
     {
         //14
         FUNC_DEBUG0,  //PIO_GPIO
-        FUNC_GPIOHS4, //PIO_GPIOHS
+        FUNC_GPIOHS14, //PIO_GPIOHS
         FUNC_DEBUG0,  //PIO_I2C
         FUNC_DEBUG0,  //PIO_SPI
         FUNC_DEBUG0,  //PIO_UART
@@ -236,7 +236,7 @@ PinDescription __attribute__((weak)) pin_map[] = {
     {
         //16
         FUNC_DEBUG0,  //PIO_GPIO
-        FUNC_GPIOHS5, //PIO_GPIOHS
+        FUNC_GPIOHS16, //PIO_GPIOHS
         FUNC_DEBUG0,  //PIO_I2C
         FUNC_DEBUG0,  //PIO_SPI
         FUNC_DEBUG0,  //PIO_UART
@@ -288,7 +288,7 @@ PinDescription __attribute__((weak)) pin_map[] = {
     {
         //20
         FUNC_DEBUG0,  //PIO_GPIO
-        FUNC_GPIOHS5, //PIO_GPIOHS
+        FUNC_GPIOHS20, //PIO_GPIOHS
         FUNC_DEBUG0,  //PIO_I2C
         FUNC_DEBUG0,  //PIO_SPI
         FUNC_DEBUG0,  //PIO_UART
@@ -301,7 +301,7 @@ PinDescription __attribute__((weak)) pin_map[] = {
     {
         //21
         FUNC_DEBUG0,  //PIO_GPIO
-        FUNC_GPIOHS6, //PIO_GPIOHS
+        FUNC_GPIOHS21, //PIO_GPIOHS
         FUNC_DEBUG0,  //PIO_I2C
         FUNC_DEBUG0,  //PIO_SPI
         FUNC_DEBUG0,  //PIO_UART
@@ -314,7 +314,7 @@ PinDescription __attribute__((weak)) pin_map[] = {
     {
         //22
         FUNC_DEBUG0,  //PIO_GPIO
-        FUNC_GPIOHS7, //PIO_GPIOHS
+        FUNC_GPIOHS22, //PIO_GPIOHS
         FUNC_DEBUG0,  //PIO_I2C
         FUNC_DEBUG0,  //PIO_SPI
         FUNC_DEBUG0,  //PIO_UART
@@ -327,7 +327,7 @@ PinDescription __attribute__((weak)) pin_map[] = {
     {
         //23
         FUNC_DEBUG0,  //PIO_GPIO
-        FUNC_GPIOHS8, //PIO_GPIOHS
+        FUNC_GPIOHS23, //PIO_GPIOHS
         FUNC_DEBUG0,  //PIO_I2C
         FUNC_DEBUG0,  //PIO_SPI
         FUNC_DEBUG0,  //PIO_UART
@@ -340,7 +340,7 @@ PinDescription __attribute__((weak)) pin_map[] = {
     {
         //24
         FUNC_DEBUG0,  //PIO_GPIO
-        FUNC_GPIOHS9, //PIO_GPIOHS
+        FUNC_GPIOHS24, //PIO_GPIOHS
         FUNC_DEBUG0,  //PIO_I2C
         FUNC_DEBUG0,  //PIO_SPI
         FUNC_DEBUG0,  //PIO_UART
@@ -418,7 +418,7 @@ PinDescription __attribute__((weak)) pin_map[] = {
     {
         //30
         FUNC_DEBUG0,   //PIO_GPIO
-        FUNC_GPIOHS10, //PIO_GPIOHS
+        FUNC_GPIOHS30, //PIO_GPIOHS
         FUNC_DEBUG0,   //PIO_I2C
         FUNC_DEBUG0,   //PIO_SPI
         FUNC_DEBUG0,   //PIO_UART
@@ -431,7 +431,7 @@ PinDescription __attribute__((weak)) pin_map[] = {
     {
         //31
         FUNC_DEBUG0,   //PIO_GPIO
-        FUNC_GPIOHS11, //PIO_GPIOHS
+        FUNC_GPIOHS31, //PIO_GPIOHS
         FUNC_DEBUG0,   //PIO_I2C
         FUNC_DEBUG0,   //PIO_SPI
         FUNC_DEBUG0,   //PIO_UART
@@ -509,7 +509,7 @@ PinDescription __attribute__((weak)) pin_map[] = {
     {
         //37
         FUNC_DEBUG0,   //PIO_GPIO
-        FUNC_GPIOHS12, //PIO_GPIOHS
+        FUNC_DEBUG0, //PIO_GPIOHS
         FUNC_DEBUG0,   //PIO_I2C
         FUNC_DEBUG0,   //PIO_SPI
         FUNC_DEBUG0,   //PIO_UART
@@ -522,7 +522,7 @@ PinDescription __attribute__((weak)) pin_map[] = {
     {
         //38
         FUNC_DEBUG0,   //PIO_GPIO
-        FUNC_GPIOHS13, //PIO_GPIOHS
+        FUNC_DEBUG0, //PIO_GPIOHS
         FUNC_DEBUG0,   //PIO_I2C
         FUNC_DEBUG0,   //PIO_SPI
         FUNC_DEBUG0,   //PIO_UART
