@@ -98,7 +98,7 @@ void (*TwoWire::user_onReceive)(int);
 
 // Constructors ////////////////////////////////////////////////////////////////
 
-TwoWire::TwoWire(int i2c_num, int sda_pin = 18, int scl_pin = 19) : _i2c_num((i2c_device_number_t)i2c_num)
+TwoWire::TwoWire(int i2c_num, int sda_pin = 19, int scl_pin = 18) : _i2c_num((i2c_device_number_t)i2c_num)
 {
     fpioa_set_function(sda_pin, pin_map[sda_pin]);
     fpioa_set_function(scl_pin, pin_map[scl_pin]);
@@ -402,5 +402,5 @@ void TwoWire::onEvent(void (*function)(int))
 }
 
 #if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_I2C)
-TwoWire Wire(0);
+TwoWire Wire(1);
 #endif
