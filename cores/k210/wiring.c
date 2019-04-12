@@ -65,11 +65,12 @@ unsigned long micros() {
  * specified as parameter. (There are 1000 milliseconds in a second.)
 */
 void delay(unsigned long ms){
-#ifndef MICROPYTHON
-    //msleep(ms);
+#ifdef FREERTOS
     vTaskDelay(ms / portTICK_RATE_MS);
-#else
+#elif MICROPYTHON
     mp_hal_delay_ms(ms);
+#elif NOFREERTOS
+    msleep(ms);
 #endif
 }
 
