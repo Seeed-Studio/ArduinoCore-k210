@@ -18,7 +18,7 @@ Open your Arudino IDE, click on **File > Preferences**, and copy below url to *A
 ```
 https://raw.githubusercontent.com/Seeed-Studio/Seeed_Platform/master/package_seeeduino_boards_index.json
 ```
-
+![](https://user-images.githubusercontent.com/4081906/56029634-6a5f3480-5d4d-11e9-9eff-676c70fd5a6e.gif)
 Note:No additional Settings are required on Windows, but on Linux and Macosx platforms, kflash requires python3 environment and you will need to execute the following command to install the dependent software.`
 ```
 #Maciosx
