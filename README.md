@@ -1,9 +1,10 @@
 # ArduinoCore-k210
 
- ArduinoCore-k210. Based on kendryte-standalone-sdk, we added the full ArduinoCore-API interface to support Arduino IDE, Linux, Windows, Mac OS X and other development environments. With the support of the ArduinoCore-k210, all k210-based development boards can run Grove Arduino Library and many excellent Arduino libraries in the community of Arduino.
+ ArduinoCore-k210. Based on [kendryte-standalone-sdk](https://github.com/kendryte/kendryte-standalone-sdk), we added the full ArduinoCore-API interface to support Arduino IDE, Linux, Windows, Mac OS X and other development environments. With the support of the ArduinoCore-k210, all k210-based development boards can run Grove Arduino Library and many excellent [Arduino libraries](https://www.arduinolibraries.info/) in the community of Arduino. If you're not familiar with Arduino, you can find the documentation you need [here](https://www.arduino.cc/en/Guide/HomePage).
 
 
-## Additional k210 Boards Manager URLs:
+## Add the k210-based board to the Arduino IDE
+
 ### Step 1. Download the latest Arduino IDE
 
 You need a Arduino IDE that after version 1.6.4, please download one if there's no Arduino IDE in your computer.
@@ -18,7 +19,7 @@ Open your Arudino IDE, click on **File > Preferences**, and copy below url to *A
 https://raw.githubusercontent.com/Seeed-Studio/Seeed_Platform/master/package_seeeduino_boards_index.json
 ```
 
-Note:on Linux and Macosx platforms, kflash requires python3 environment and you will need to execute the following command to install the dependent software.
+Note:No additional Settings are required on Windows, but on Linux and Macosx platforms, kflash requires python3 environment and you will need to execute the following command to install the dependent software.`
 ```
 #Maciosx
 brew install python  pip
@@ -45,7 +46,7 @@ cmake .. -DPROJ=ArduinoCore-k210  -DSKETCH=Blink -DTOOLCHAIN=/opt/kendryte-toolc
 cmake is very friendly on Linux and Macosx. You can even add a lot of third-party libraries. Here's an [example](https://github.com/Seeed-Studio/ArduinoCore-k210/blob/kendryte-standalone-sdk/micropython.cmake) of adding miropython as a third party
 
 ##  Developing kendryte-standalone-sdk
-ArduinoCore-k210 is also supported as a normal IDE. For example, when developing kendryte-standalone-sdk, you also can use the Arduino Library WS2812FX.
+ArduinoCore-k210 is also supported as a normal IDE. For example, when developing kendryte-standalone-sdk, you also can use the [Arduino Library WS2812FX](https://github.com/kitesurfer1404/WS2812FX). This way you can run all the [kendryte-standalone-demo](https://github.com/kendryte/kendryte-standalone-demo) in the Arduino IDE.
 ```cpp
 #include <WS2812FX.h>
 
@@ -139,4 +140,6 @@ int main(){
 }
 
 ```
+
+## FAQ
 ArduinoCore-k210 is a very interesting software project to help all of you develop AI in an easier way. We can't guarantee that there is no any of bug.  If you encounter any compatibility issues or have any new ideas, feel free to check our [GitHub link](https://github.com/Seeed-Studio/ArduinoCore-k210/issues) and forum to communicate with us, we will try our best to solve the problems you have encountered. 
