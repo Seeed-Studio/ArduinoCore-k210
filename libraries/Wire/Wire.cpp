@@ -100,8 +100,8 @@ void (*TwoWire::user_onReceive)(int);
 
 TwoWire::TwoWire(int i2c_num, int sda_pin = 19, int scl_pin = 18) : _i2c_num((i2c_device_number_t)i2c_num)
 {
-    fpioa_set_function(sda_pin, pin_map[sda_pin]);
-    fpioa_set_function(scl_pin, pin_map[scl_pin]);
+    fpioa_set_function(sda_pin, pin_map[sda_pin].PinType[PIO_I2C]);
+    fpioa_set_function(scl_pin, pin_map[scl_pin].PinType[PIO_I2C]);
 }
 
 // Public Methods //////////////////////////////////////////////////////////////
