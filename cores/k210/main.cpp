@@ -46,7 +46,6 @@ void run_main_loop(void *ctx)
 
 int __attribute__((weak)) main()
 {
-#define FREERTOS 1
     /*init timer0 counter*/
     init();
     xTaskCreate(run_main_loop, "run_main_loop", 2048, NULL, 1, NULL);

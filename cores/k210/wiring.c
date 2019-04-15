@@ -29,7 +29,7 @@
 #include "bsp.h"
 #include "sysctl.h"
 #include "plic.h"
-
+#include "pins_arduino.h"
 // the whole number of milliseconds per timer0 overflow
 #define MILLIS_INC 1000
 #ifdef MICROPYTHON
