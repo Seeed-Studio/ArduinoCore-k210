@@ -69,4 +69,9 @@ using std::min;
 #include "Common.h"
 
 #include "pins_arduino.h"
+#ifdef ARDUINO_DEBUG
+#define DEBUGV(_f, ...)  printf(_f, ## __VA_ARGS__)
+#else
+#define DEBUGV(...)
+#endif
 #endif
