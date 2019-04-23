@@ -1,10 +1,3 @@
-/*
- * @Description: In User Settings Edit
- * @Author: your name
- * @LastEditors: Please set LastEditors
- * @Date: 2019-04-08 15:51:42
- * @LastEditTime: 2019-04-08 22:30:45
- */
 /**
  * The MIT License (MIT)
  * 
@@ -209,10 +202,10 @@ void SPIClass::init()
     dmac_init();
     io_set_power();
 
-    fpioa_set_function(_spi_clk, pin_map[_spi_clk]);
-    fpioa_set_function(_spi_mosi, pin_map[_spi_mosi]);
-    fpioa_set_function(_spi_miso, pin_map[_spi_miso]);
-    fpioa_set_function(_spi_cs, pin_map[_spi_cs]);
+    fpioa_set_function(_spi_clk, pin_map[_spi_clk].PinType[PIO_SPI]);
+    fpioa_set_function(_spi_mosi, pin_map[_spi_mosi].PinType[PIO_SPI]);
+    fpioa_set_function(_spi_miso, pin_map[_spi_miso].PinType[PIO_SPI]);
+    fpioa_set_function(_spi_cs, pin_map[_spi_cs].PinType[PIO_SPI]);
 
     spi_init((spi_device_num_t)_spi_num, (spi_work_mode_t)_settings._mode, SPI_FF_STANDARD, 8, _settings._order);
     spi_set_clk_rate((spi_device_num_t)_spi_num, _settings._clock);
