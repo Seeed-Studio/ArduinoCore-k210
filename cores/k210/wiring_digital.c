@@ -1,20 +1,20 @@
 /**
  * The MIT License (MIT)
- * 
+ *
  * Author: Baozhu Zuo (baozhu.zuo@gmail.com)
- * 
- * Copyright (C) 2019  Seeed Technology Co.,Ltd. 
- * 
+ *
+ * Copyright (C) 2019  Seeed Technology Co.,Ltd.
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,12 +30,11 @@
 #include "sysctl.h"
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-    /**
- * @description: Configures the specified pin to behave either as an input or an 
+/**
+ * @description: Configures the specified pin to behave either as an input or an
  * output. See the description of (digital pins) for details on the functionality
  *  of the pins.
  * @param: the number of the pin whose mode you wish to set
@@ -43,51 +42,32 @@ extern "C"
  *   complete description of the functionality.)
  * @return: Nothing
  */
-    void pinMode(pin_size_t pinNumber, PinMode pinMode)
-    {
-        fpioa_set_function(pinNumber, pin_map[pinNumber].PinType[PIO_GPIOHS]);
-        gpiohs_set_drive_mode(pinNumber, pinMode);
-    }
+void pinMode(pin_size_t pinNumber, PinMode pinMode) {
+    fpioa_set_function(pinNumber, pin_map[pinNumber].PinType[PIO_GPIOHS]);
+    gpiohs_set_drive_mode(pin_map[pinNumber].IO, pinMode);
+}
 
-    /**
- * @description: Write a HIGH or a LOW value to a digital pin.
- * If the pin has been configured as an OUTPUT with pinMode(), its voltage will be
- *  set to the corresponding value: 5V (or 3.3V on 3.3V boards) for HIGH, 0V 
- *  (ground) for LOW.
- * If the pin is configured as an #ifdef __cplusplus
-}
-#endifUT, digitalWrite() will enable (HIGH) or disable 
- * (LOW) the internal pullup on th#ifdef __cplusplus
-}
-#endifnput pin. It is recommended to set the pinMode()
- *  to INPUT_PULLUP to enable the #ifdef __cplusplus
-}
-#endifernal pull-up resistor. See the digital pins 
- *  tutorial for more information.#ifdef __cplusplus
-}
-#endif
- * If you do not set the pinMode() to OUTPUT, and connect an LED to a pin, when calling 
- * digitalWrite(HIGH), the LED may appear dim. Without explicitly setting pinMode(), 
- * digitalWrite() will have enabled the internal pull-up resistor, which acts like a 
- * large current-limiting resistor.
- * @param: The pin number
- * @param: HIGH or LOW
- * @return: Nothing
- */
-    void digitalWrite(pin_size_t pinNumber, PinStatus status)
-    {
-        gpiohs_set_pin(pinNumber, status);
-    }
+/**
+* @description: Write a HIGH or a LOW value to a digital pin.
+* If the pin has been configured as an OUTPUT with pinMode(), its voltage will be
+*  set to the corresponding value: 5V (or 3.3V on 3.3V boards) for HIGH, 0V
+*  (ground) for LOW.
+* If you do not set the pinMode() to OUTPUT, and connect an LED to a pin, when calling
+* digitalWrite(HIGH), the LED may appear dim. Without explicitly setting pinMode(),
+* digitalWrite() will have enabled the internal pull-up resistor, which acts like a
+* large current-limiting resistor.
+* @param: The pin number
+* @param: HIGH or LOW
+* @return: Nothing
+*/
+void digitalWrite(pin_size_t pinNumber, PinStatus status) { gpiohs_set_pin(pin_map[pinNumber].IO, status); }
 
-    /**
+/**
  * @description: Reads define
  * @param: The number odefine
  * @return: HIGH or LOWdefine
  */
-    PinStatus digitalRead(pin_size_t pinNumber)
-    {
-        return gpiohs_get_pin(pinNumber);
-    }
+PinStatus digitalRead(pin_size_t pinNumber) { return gpiohs_get_pin(pin_map[pinNumber].IO); }
 #ifdef __cplusplus
 }
 #endif
