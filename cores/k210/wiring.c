@@ -29,6 +29,8 @@
 #include "bsp.h"
 #include "sysctl.h"
 #include "plic.h"
+#include <timer.h>
+#include <pwm.h>
 #include "pins_arduino.h"
 // the whole number of milliseconds per timer0 overflow
 #define MILLIS_INC 1000
@@ -90,7 +92,36 @@ void delayMicroseconds(unsigned int us){
 }
 
 
+extern void timer_set_clock_div(timer_device_number_t timer_number, uint32_t div);
+
+int  __attribute__((weak)) timer_callback(void *ctx)
+{
+    return 0;
+}
+
 void __attribute__((weak))  init(){
     plic_init();
     sysctl_enable_irq();
+
+    timer_set_clock_div((timer_device_number_t)TIMER_PWM, 0);
+    timer_init((timer_device_number_t)TIMER_PWM);
+
+    /* Set timer interval to 10ms (1e7ns) */
+    timer_set_interval((timer_device_number_t)TIMER_PWM, (timer_channel_number_t)TIMER_PWM_CHN1, 1e7);
+        /* Set timer interval to 10ms (1e7ns) */
+    timer_set_interval((timer_device_number_t)TIMER_PWM, (timer_channel_number_t)TIMER_PWM_CHN2, 1e7);
+
+    /* Set timer callback function with repeat method */
+    timer_irq_register((timer_device_number_t)TIMER_PWM, (timer_channel_number_t)TIMER_PWM_CHN1, 0, 1, timer_callback, NULL);
+        /* Set timer callback function with repeat method */
+    timer_irq_register((timer_device_number_t)TIMER_PWM, (timer_channel_number_t)TIMER_PWM_CHN2, 0, 1, timer_callback, NULL);
+
+    timer_set_enable((timer_device_number_t)TIMER_PWM,(timer_channel_number_t)TIMER_PWM_CHN1, 1);
+    timer_set_enable((timer_device_number_t)TIMER_PWM,(timer_channel_number_t)TIMER_PWM_CHN2, 1);
+
+    pwm_init((pwm_device_number_t)TIMER_PWM);
+    /* Enable PWM */
+    pwm_set_enable((pwm_device_number_t)TIMER_PWM, (pwm_channel_number_t)TIMER_PWM_CHN1, 1);
+    pwm_set_enable((pwm_device_number_t)TIMER_PWM, (pwm_channel_number_t)TIMER_PWM_CHN2, 1);
+
 }

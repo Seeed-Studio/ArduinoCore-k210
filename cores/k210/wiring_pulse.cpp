@@ -62,66 +62,20 @@ unsigned long pulseInLong(uint8_t pin, uint8_t state, unsigned long timeout)
     return pulseIn(pin, state, timeout);
 }
 
-int __attribute__((weak)) pwm_callback(void *ctx)
+
+
+
+
+void tone(uint8_t _pin, unsigned int frequency, double duration)
 {
-#if 0
-    static double cnt = 0.01;
-    static int flag = 0;
-
-    pwm_set_frequency(TIMER_PWM, TIMER_PWM_CHN, 200000, cnt);
-
-    flag ? (cnt -= 0.01) : (cnt += 0.01);
-    if (cnt > 1.0)
-    {
-        cnt = 1.0;
-        flag = 1;
-    }
-    else if (cnt < 0.0)
-    {
-        cnt = 0.0;
-        flag = 0;
-    }
-#endif
-    return 0;
-}
-
-#ifndef TIMER_NOR
-#define TIMER_NOR 0
-#endif
-
-#ifndef TIMER_CHN
-#define TIMER_CHN 0
-#endif
-
-#ifndef TIMER_PWM
-#define TIMER_PWM 1
-#endif
-
-#ifndef TIMER_PWM_CHN
-#define TIMER_PWM_CHN 0
-#endif
-
-void tone(uint8_t _pin, unsigned int frequency, unsigned long duration)
-{
-    /* Init FPIOA pin mapping for PWM*/
+    if(_pin != 11 && _pin != 12) return;
     fpioa_set_function(_pin, pin_map[_pin].PinType[PIO_TIMER]);
-    /* Init timer */
-    timer_init(TIMER_NOR);
-    /* Set timer interval to 10ms (1e7ns) */
-    timer_set_interval(TIMER_NOR, TIMER_CHN, 1e7);
-    /* Set timer callback function with repeat method */
-    timer_irq_register(TIMER_NOR, TIMER_CHN, 0, 1, pwm_callback, NULL);
-    /* Enable timer */
-    timer_set_enable(TIMER_NOR, TIMER_CHN, 1);
-    /* Init PWM */
-    pwm_init(TIMER_PWM);
-    /* Set PWM to 200000Hz */
-    pwm_set_frequency(TIMER_PWM, TIMER_PWM_CHN, frequency, duration);
-    /* Enable PWM */
-    pwm_set_enable(TIMER_PWM, TIMER_PWM_CHN, 1);
+    pwm_set_frequency((pwm_device_number_t)TIMER_PWM, (pwm_channel_number_t)(_pin == 11 ? 1 : 0), frequency, duration);
 }
+
 void noTone(uint8_t _pin)
 {
+    if(_pin != 11 && _pin != 12) return;
     /* Disable PWM */
-    pwm_set_enable(TIMER_PWM, TIMER_PWM_CHN, 0);
+    pwm_set_enable((pwm_device_number_t)TIMER_PWM, (pwm_channel_number_t)(_pin == 11 ? 1 : 0), 0);
 }

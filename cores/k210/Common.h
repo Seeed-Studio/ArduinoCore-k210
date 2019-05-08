@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include "gpiohs.h"
 
 #ifdef __cplusplus
 extern "C"{
@@ -34,8 +35,6 @@ typedef enum {
 #define RAD_TO_DEG  57.295779513082320876798154814105
 #define EULER       2.718281828459045235360287471352
 
-#define SERIAL      0x0
-#define DISPLAY     0x1
 
 #ifndef _min
 #define _min(a,b) \
@@ -68,7 +67,7 @@ typedef enum {
 #endif
 
 typedef void (*voidFuncPtr)(void);
-typedef void (*voidFuncPtrParam)(void*);
+typedef int (*voidFuncPtrParam)(void*);
 
 // interrupts() / noInterrupts() must be defined by the core
 #define interrupts() sysctl_enable_irq()
@@ -122,8 +121,8 @@ unsigned long pulseInLong(pin_size_t pin, uint8_t state, unsigned long timeout);
 void shiftOut(pin_size_t dataPin, pin_size_t clockPin, BitOrder bitOrder, uint8_t val);
 pin_size_t shiftIn(pin_size_t dataPin, pin_size_t clockPin, BitOrder bitOrder);
 
-void attachInterrupt(pin_size_t interruptNumber, voidFuncPtr callback, PinStatus mode);
-void attachInterruptParam(pin_size_t interruptNumber, voidFuncPtrParam callback, PinStatus mode, void* param);
+void attachInterrupt(pin_size_t interruptNumber, voidFuncPtr callback, gpio_pin_edge_t mode);
+void attachInterruptParam(pin_size_t interruptNumber, voidFuncPtrParam callback, gpio_pin_edge_t mode, void* param);
 void detachInterrupt(pin_size_t interruptNumber);
 
 void setup(void);
@@ -144,7 +143,7 @@ uint16_t makeWord(byte h, byte l);
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout = 1000000L);
 unsigned long pulseInLong(uint8_t pin, uint8_t state, unsigned long timeout = 1000000L);
 
-void tone(uint8_t _pin, unsigned int frequency, unsigned long duration = 0);
+void tone(uint8_t _pin, unsigned int frequency, double duration=0.5);
 void noTone(uint8_t _pin);
 
 // WMath prototypes
