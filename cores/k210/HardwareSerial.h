@@ -16,14 +16,6 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-/**
- * 为什么不用官方的uart.cpp
- * 1, 不支持peek，flush
- * 2, 需要支持Stream
- * 
- * TODO: settimeout需要优化
-*/
-
 #pragma once
 
 #include "Arduino.h"
@@ -107,10 +99,10 @@
 class HardwareSerial : public Stream
 {
   public:
-    HardwareSerial();
+    HardwareSerial(uart_device_number_t uart_num_ = UART_DEVICE_1, int rx_pin_ = 4, int tx_pin_ = 5);
     virtual ~HardwareSerial(){}
-    void begin(unsigned long baudrate, uart_device_number_t uart_num_ = UART_DEVICE_1, int rx_pin_ = 4, int tx_pin_ = 5);
-    void begin(unsigned long baudrate, uint16_t config, uart_device_number_t uart_num_ = UART_DEVICE_1, int rx_pin_ = 4, int tx_pin_ = 5);
+    void begin(unsigned long baudrate);
+    void begin(unsigned long baudrate, uint16_t config);
     void end();
     int available(void);
     int peek(void);
@@ -131,6 +123,9 @@ class HardwareSerial : public Stream
     RingBuffer *rb_;
 
     size_t read_timeout_ = 1000;
+    uart_device_number_t _uart_num;
+    int _rx_pin;
+    int _tx_pin;
 };
 
 // XXX: Are we keeping the serialEvent API?

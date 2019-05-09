@@ -27,8 +27,8 @@
 #include "HardwareSerial.h"
 
 #if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SERIAL)
-HardwareSerial Serial;
-HardwareSerial Serial1;
+HardwareSerial Serial(UART_DEVICE_1,4,5);
+HardwareSerial Serial1(UART_DEVICE_2,6,7);
 #endif
 
 #define UART_BRATE_CONST 16
@@ -38,7 +38,11 @@ HardwareSerial Serial1;
  * @param {type}
  * @return:
  */
-HardwareSerial::HardwareSerial() {}
+HardwareSerial::HardwareSerial(uart_device_number_t uart_num_ , int rx_pin_, int tx_pin_) {
+    _uart_num = uart_num_;
+    _rx_pin = rx_pin_;
+    _tx_pin = tx_pin_;
+}
 
 int HardwareSerial::on_irq_recv_callback_(void *userdata) {
     char data;
@@ -78,8 +82,8 @@ void HardwareSerial::init_(unsigned long baudrate, uint16_t config, uart_device_
  * @param {type}
  * @return:
  */
-void HardwareSerial::begin(unsigned long baudrate, uart_device_number_t uart_num_, int rx_pin_, int tx_pin_) {
-    init_(baudrate, SERIAL_8N1, uart_num_, rx_pin_, tx_pin_);
+void HardwareSerial::begin(unsigned long baudrate) {
+    init_(baudrate, SERIAL_8N1, _uart_num, _rx_pin, _tx_pin);
 }
 
 /**
@@ -87,8 +91,8 @@ void HardwareSerial::begin(unsigned long baudrate, uart_device_number_t uart_num
  * @param {type}
  * @return:
  */
-void HardwareSerial::begin(unsigned long baudrate, uint16_t config, uart_device_number_t uart_num_, int rx_pin_, int tx_pin_) {
-    init_(baudrate, config, uart_num_, rx_pin_, tx_pin_);
+void HardwareSerial::begin(unsigned long baudrate, uint16_t config) {
+    init_(baudrate, config, _uart_num, _rx_pin, _tx_pin);
 }
 
 /**
