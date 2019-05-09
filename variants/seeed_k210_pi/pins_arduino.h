@@ -37,7 +37,6 @@ typedef enum _EPioType {
 } EPioType;
 
 typedef struct _PinDescription {
-    uint8_t IO;
     fpioa_function_t PinType[PIO_DEBUG + 1];
 } PinDescription;
 
@@ -45,12 +44,11 @@ PinDescription
     __attribute__((weak)) pin_map[] =
         {
             {
-                .IO = 0,
                 .PinType =
                     {
                         // 0
                         FUNC_DEBUG0,    // PIO_GPIO
-                        FUNC_GPIOHS0,   // PIO_GPIOHS
+                        FUNC_DEBUG0,    // PIO_GPIOHS
                         FUNC_DEBUG0,    // PIO_I2C
                         FUNC_DEBUG0,    // PIO_SPI
                         FUNC_DEBUG0,    // PIO_UART
@@ -62,12 +60,11 @@ PinDescription
                     },
             },
             {
-                .IO = 1,
                 .PinType =
                     {
                         // 1
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS1,  // PIO_GPIOHS
+                        FUNC_DEBUG0,   // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
@@ -79,12 +76,11 @@ PinDescription
                     },
             },
             {
-                .IO = 2,
                 .PinType =
                     {
                         // 2
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS2,  // PIO_GPIOHS
+                        FUNC_DEBUG0,   // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
@@ -96,12 +92,11 @@ PinDescription
                     },
             },
             {
-                .IO = 3,
                 .PinType =
                     {
                         // 3
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS3,  // PIO_GPIOHS
+                        FUNC_DEBUG0,   // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
@@ -113,12 +108,11 @@ PinDescription
                     },
             },
             {
-                .IO = 4,
                 .PinType =
                     {
                         // 4
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS4,  // PIO_GPIOHS
+                        FUNC_GPIOHS0,  // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_UART1_RX, // PIO_UART
@@ -130,12 +124,11 @@ PinDescription
                     },
             },
             {
-                .IO = 5,
                 .PinType =
                     {
                         // 5
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS5,  // PIO_GPIOHS
+                        FUNC_GPIOHS1,  // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_UART1_TX, // PIO_UART
@@ -147,12 +140,11 @@ PinDescription
                     },
             },
             {
-                .IO = 6,
                 .PinType =
                     {
                         // 6
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS6,  // PIO_GPIOHS
+                        FUNC_GPIOHS2,  // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_UART2_RX, // PIO_UART
@@ -164,12 +156,11 @@ PinDescription
                     },
             },
             {
-                .IO = 7,
                 .PinType =
                     {
                         // 7
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS7,  // PIO_GPIOHS
+                        FUNC_GPIOHS3,  // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_UART2_TX, // PIO_UART
@@ -181,12 +172,11 @@ PinDescription
                     },
             },
             {
-                .IO = 8,
                 .PinType =
                     {
                         // 8
                         FUNC_DEBUG0,  // PIO_GPIO
-                        FUNC_GPIOHS8, // PIO_GPIOHS
+                        FUNC_GPIOHS4, // PIO_GPIOHS
                         FUNC_DEBUG0,  // PIO_I2C
                         FUNC_DEBUG0,  // PIO_SPI
                         FUNC_DEBUG0,  // PIO_UART
@@ -198,12 +188,11 @@ PinDescription
                     },
             },
             {
-                .IO = 9,
                 .PinType =
                     {
                         // 9
                         FUNC_DEBUG0,  // PIO_GPIO
-                        FUNC_GPIOHS9, // PIO_GPIOHS
+                        FUNC_GPIOHS5, // PIO_GPIOHS
                         FUNC_DEBUG0,  // PIO_I2C
                         FUNC_DEBUG0,  // PIO_SPI
                         FUNC_DEBUG0,  // PIO_UART
@@ -215,29 +204,27 @@ PinDescription
                     },
             },
             {
-                .IO = 10,
                 .PinType =
                     {
                         // 10
-                        FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS10, // PIO_GPIOHS
-                        FUNC_DEBUG0,   // PIO_I2C
-                        FUNC_DEBUG0,   // PIO_SPI
-                        FUNC_DEBUG0,   // PIO_UART
-                        FUNC_DEBUG0,   // PIO_TIMER
-                        FUNC_DEBUG0,   // PIO_I2S
-                        FUNC_DEBUG0,   // PIO_CMOS
-                        FUNC_DEBUG0,   // PIO_JTAG
-                        FUNC_DEBUG0,   // PIO_DEBUG
+                        FUNC_DEBUG0,  // PIO_GPIO
+                        FUNC_GPIOHS6, // PIO_GPIOHS
+                        FUNC_DEBUG0,  // PIO_I2C
+                        FUNC_DEBUG0,  // PIO_SPI
+                        FUNC_DEBUG0,  // PIO_UART
+                        FUNC_DEBUG0,  // PIO_TIMER
+                        FUNC_DEBUG0,  // PIO_I2S
+                        FUNC_DEBUG0,  // PIO_CMOS
+                        FUNC_DEBUG0,  // PIO_JTAG
+                        FUNC_DEBUG0,  // PIO_DEBUG
                     },
             },
             {
-                .IO = 11,
                 .PinType =
                     {
                         // 11
                         FUNC_DEBUG0,         // PIO_GPIO
-                        FUNC_GPIOHS11,       // PIO_GPIOHS
+                        FUNC_GPIOHS7,        // PIO_GPIOHS
                         FUNC_DEBUG0,         // PIO_I2C
                         FUNC_DEBUG0,         // PIO_SPI
                         FUNC_UART2_TX,       // PIO_UART
@@ -249,12 +236,11 @@ PinDescription
                     },
             },
             {
-                .IO = 12,
                 .PinType =
                     {
                         // 12
                         FUNC_DEBUG0,         // PIO_GPIO
-                        FUNC_GPIOHS12,       // PIO_GPIOHS
+                        FUNC_GPIOHS8,        // PIO_GPIOHS
                         FUNC_DEBUG0,         // PIO_I2C
                         FUNC_DEBUG0,         // PIO_SPI
                         FUNC_UART2_RX,       // PIO_UART
@@ -266,12 +252,11 @@ PinDescription
                     },
             },
             {
-                .IO = 13,
                 .PinType =
                     {
                         // 13
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS13, // PIO_GPIOHS
+                        FUNC_GPIOHS9,  // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_UART3_RX, // PIO_UART
@@ -283,12 +268,11 @@ PinDescription
                     },
             },
             {
-                .IO = 14,
                 .PinType =
                     {
                         // 14
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS14, // PIO_GPIOHS
+                        FUNC_GPIOHS10, // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_UART3_TX, // PIO_UART
@@ -300,12 +284,11 @@ PinDescription
                     },
             },
             {
-                .IO = 15,
                 .PinType =
                     {
                         // 15
                         FUNC_DEBUG0,    // PIO_GPIO
-                        FUNC_GPIOHS15,  // PIO_GPIOHS
+                        FUNC_GPIOHS11,  // PIO_GPIOHS
                         FUNC_I2C0_SCLK, // PIO_I2C
                         FUNC_DEBUG0,    // PIO_SPI
                         FUNC_DEBUG0,    // PIO_UART
@@ -317,10 +300,73 @@ PinDescription
                     },
             },
             {
-                .IO = 16,
                 .PinType =
                     {
                         // 16
+                        FUNC_DEBUG0,   // PIO_GPIO
+                        FUNC_GPIOHS12, // PIO_GPIOHS
+                        FUNC_DEBUG0,   // PIO_I2C
+                        FUNC_DEBUG0,   // PIO_SPI
+                        FUNC_DEBUG0,   // PIO_UART
+                        FUNC_DEBUG0,   // PIO_TIMER
+                        FUNC_DEBUG0,   // PIO_I2S
+                        FUNC_DEBUG0,   // PIO_CMOS
+                        FUNC_DEBUG0,   // PIO_JTAG
+                        FUNC_DEBUG0,   // PIO_DEBUG
+                    },
+            },
+            {
+                .PinType =
+                    {
+                        // 17
+                        FUNC_DEBUG0,   // PIO_GPIO
+                        FUNC_GPIOHS13, // PIO_GPIOHS
+                        FUNC_I2C0_SDA, // PIO_I2C
+                        FUNC_DEBUG0,   // PIO_SPI
+                        FUNC_DEBUG0,   // PIO_UART
+                        FUNC_DEBUG0,   // PIO_TIMER
+                        FUNC_DEBUG0,   // PIO_I2S
+                        FUNC_DEBUG0,   // PIO_CMOS
+                        FUNC_DEBUG0,   // PIO_JTAG
+                        FUNC_DEBUG0,   // PIO_DEBUG
+                    },
+            },
+            {
+                .PinType =
+                    {
+                        // 18
+                        FUNC_DEBUG0,    // PIO_GPIO
+                        FUNC_GPIOHS14,  // PIO_GPIOHS
+                        FUNC_I2C1_SCLK, // PIO_I2C
+                        FUNC_DEBUG0,    // PIO_SPI
+                        FUNC_DEBUG0,    // PIO_UART
+                        FUNC_DEBUG0,    // PIO_TIMER
+                        FUNC_DEBUG0,    // PIO_I2S
+                        FUNC_DEBUG0,    // PIO_CMOS
+                        FUNC_DEBUG0,    // PIO_JTAG
+                        FUNC_DEBUG0,    // PIO_DEBUG
+                    },
+            },
+            {
+                .PinType =
+                    {
+                        // 19
+                        FUNC_DEBUG0,   // PIO_GPIO
+                        FUNC_GPIOHS15, // PIO_GPIOHS
+                        FUNC_I2C1_SDA, // PIO_I2C
+                        FUNC_DEBUG0,   // PIO_SPI
+                        FUNC_DEBUG0,   // PIO_UART
+                        FUNC_DEBUG0,   // PIO_TIMER
+                        FUNC_DEBUG0,   // PIO_I2S
+                        FUNC_DEBUG0,   // PIO_CMOS
+                        FUNC_DEBUG0,   // PIO_JTAG
+                        FUNC_DEBUG0,   // PIO_DEBUG
+                    },
+            },
+            {
+                .PinType =
+                    {
+                        // 20
                         FUNC_DEBUG0,   // PIO_GPIO
                         FUNC_GPIOHS16, // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
@@ -334,80 +380,11 @@ PinDescription
                     },
             },
             {
-                .IO = 17,
-                .PinType =
-                    {
-                        // 17
-                        FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS17, // PIO_GPIOHS
-                        FUNC_I2C0_SDA, // PIO_I2C
-                        FUNC_DEBUG0,   // PIO_SPI
-                        FUNC_DEBUG0,   // PIO_UART
-                        FUNC_DEBUG0,   // PIO_TIMER
-                        FUNC_DEBUG0,   // PIO_I2S
-                        FUNC_DEBUG0,   // PIO_CMOS
-                        FUNC_DEBUG0,   // PIO_JTAG
-                        FUNC_DEBUG0,   // PIO_DEBUG
-                    },
-            },
-            {
-                .IO = 18,
-                .PinType =
-                    {
-                        // 18
-                        FUNC_DEBUG0,    // PIO_GPIO
-                        FUNC_GPIOHS18,  // PIO_GPIOHS
-                        FUNC_I2C1_SCLK, // PIO_I2C
-                        FUNC_DEBUG0,    // PIO_SPI
-                        FUNC_DEBUG0,    // PIO_UART
-                        FUNC_DEBUG0,    // PIO_TIMER
-                        FUNC_DEBUG0,    // PIO_I2S
-                        FUNC_DEBUG0,    // PIO_CMOS
-                        FUNC_DEBUG0,    // PIO_JTAG
-                        FUNC_DEBUG0,    // PIO_DEBUG
-                    },
-            },
-            {
-                .IO = 19,
-                .PinType =
-                    {
-                        // 19
-                        FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS19, // PIO_GPIOHS
-                        FUNC_I2C1_SDA, // PIO_I2C
-                        FUNC_DEBUG0,   // PIO_SPI
-                        FUNC_DEBUG0,   // PIO_UART
-                        FUNC_DEBUG0,   // PIO_TIMER
-                        FUNC_DEBUG0,   // PIO_I2S
-                        FUNC_DEBUG0,   // PIO_CMOS
-                        FUNC_DEBUG0,   // PIO_JTAG
-                        FUNC_DEBUG0,   // PIO_DEBUG
-                    },
-            },
-            {
-                .IO = 20,
-                .PinType =
-                    {
-                        // 20
-                        FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS20, // PIO_GPIOHS
-                        FUNC_DEBUG0,   // PIO_I2C
-                        FUNC_DEBUG0,   // PIO_SPI
-                        FUNC_DEBUG0,   // PIO_UART
-                        FUNC_DEBUG0,   // PIO_TIMER
-                        FUNC_DEBUG0,   // PIO_I2S
-                        FUNC_DEBUG0,   // PIO_CMOS
-                        FUNC_DEBUG0,   // PIO_JTAG
-                        FUNC_DEBUG0,   // PIO_DEBUG
-                    },
-            },
-            {
-                .IO = 21,
                 .PinType =
                     {
                         // 21
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS21, // PIO_GPIOHS
+                        FUNC_GPIOHS17, // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
@@ -419,12 +396,11 @@ PinDescription
                     },
             },
             {
-                .IO = 22,
                 .PinType =
                     {
                         // 22
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS22, // PIO_GPIOHS
+                        FUNC_GPIOHS18, // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
@@ -436,12 +412,11 @@ PinDescription
                     },
             },
             {
-                .IO = 23,
                 .PinType =
                     {
                         // 23
                         FUNC_DEBUG0,    // PIO_GPIO
-                        FUNC_GPIOHS23,  // PIO_GPIOHS
+                        FUNC_GPIOHS19,  // PIO_GPIOHS
                         FUNC_I2C1_SCLK, // PIO_I2C
                         FUNC_DEBUG0,    // PIO_SPI
                         FUNC_DEBUG0,    // PIO_UART
@@ -453,12 +428,11 @@ PinDescription
                     },
             },
             {
-                .IO = 24,
                 .PinType =
                     {
                         // 24
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS24, // PIO_GPIOHS
+                        FUNC_GPIOHS20, // PIO_GPIOHS
                         FUNC_I2C1_SDA, // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
@@ -470,12 +444,11 @@ PinDescription
                     },
             },
             {
-                .IO = 25,
                 .PinType =
                     {
                         // 25
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS25, // PIO_GPIOHS
+                        FUNC_GPIOHS21, // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_SPI1_SS1, // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
@@ -487,12 +460,11 @@ PinDescription
                     },
             },
             {
-                .IO = 26,
                 .PinType =
                     {
                         // 26
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS26, // PIO_GPIOHS
+                        FUNC_GPIOHS22, // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_SPI1_D1,  // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
@@ -504,12 +476,11 @@ PinDescription
                     },
             },
             {
-                .IO = 27,
                 .PinType =
                     {
                         // 27
                         FUNC_DEBUG0,    // PIO_GPIO
-                        FUNC_GPIOHS27,  // PIO_GPIOHS
+                        FUNC_GPIOHS23,  // PIO_GPIOHS
                         FUNC_DEBUG0,    // PIO_I2C
                         FUNC_SPI1_SCLK, // PIO_SPI
                         FUNC_DEBUG0,    // PIO_UART
@@ -521,12 +492,11 @@ PinDescription
                     },
             },
             {
-                .IO = 28,
                 .PinType =
                     {
                         // 28
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS28, // PIO_GPIOHS
+                        FUNC_GPIOHS24, // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_SPI1_D0,  // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
@@ -538,12 +508,11 @@ PinDescription
                     },
             },
             {
-                .IO = 29,
                 .PinType =
                     {
                         // 29
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS29, // PIO_GPIOHS
+                        FUNC_GPIOHS25, // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_SPI1_SS0, // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
@@ -555,12 +524,11 @@ PinDescription
                     },
             },
             {
-                .IO = 30,
                 .PinType =
                     {
                         // 30
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS30, // PIO_GPIOHS
+                        FUNC_GPIOHS26, // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
@@ -572,12 +540,11 @@ PinDescription
                     },
             },
             {
-                .IO = 31,
                 .PinType =
                     {
                         // 31
                         FUNC_DEBUG0,   // PIO_GPIO
-                        FUNC_GPIOHS31, // PIO_GPIOHS
+                        FUNC_GPIOHS27, // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
@@ -589,12 +556,11 @@ PinDescription
                     },
             },
             {
-                .IO = 32,
                 .PinType =
                     {
                         // 32
                         FUNC_DEBUG0,     // PIO_GPIO
-                        FUNC_DEBUG0,     // PIO_GPIOHS
+                        FUNC_GPIOHS28,   // PIO_GPIOHS
                         FUNC_DEBUG0,     // PIO_I2C
                         FUNC_DEBUG0,     // PIO_SPI
                         FUNC_DEBUG0,     // PIO_UART
@@ -606,29 +572,27 @@ PinDescription
                     },
             },
             {
-                .IO = 33,
                 .PinType =
                     {
                         // 33
-                        FUNC_DEBUG0,  // PIO_GPIO
-                        FUNC_DEBUG0,  // PIO_GPIOHS
-                        FUNC_DEBUG0,  // PIO_I2C
-                        FUNC_DEBUG0,  // PIO_SPI
-                        FUNC_DEBUG0,  // PIO_UART
-                        FUNC_DEBUG0,  // PIO_TIMER
-                        FUNC_I2S0_WS, // PIO_I2S
-                        FUNC_DEBUG0,  // PIO_CMOS
-                        FUNC_DEBUG0,  // PIO_JTAG
-                        FUNC_DEBUG0,  // PIO_DEBUG
+                        FUNC_DEBUG0,   // PIO_GPIO
+                        FUNC_GPIOHS29, // PIO_GPIOHS
+                        FUNC_DEBUG0,   // PIO_I2C
+                        FUNC_DEBUG0,   // PIO_SPI
+                        FUNC_DEBUG0,   // PIO_UART
+                        FUNC_DEBUG0,   // PIO_TIMER
+                        FUNC_I2S0_WS,  // PIO_I2S
+                        FUNC_DEBUG0,   // PIO_CMOS
+                        FUNC_DEBUG0,   // PIO_JTAG
+                        FUNC_DEBUG0,   // PIO_DEBUG
                     },
             },
             {
-                .IO = 34,
                 .PinType =
                     {
                         // 34
                         FUNC_DEBUG0,      // PIO_GPIO
-                        FUNC_DEBUG0,      // PIO_GPIOHS
+                        FUNC_GPIOHS30,    // PIO_GPIOHS
                         FUNC_DEBUG0,      // PIO_I2C
                         FUNC_DEBUG0,      // PIO_SPI
                         FUNC_DEBUG0,      // PIO_UART
@@ -640,12 +604,11 @@ PinDescription
                     },
             },
             {
-                .IO = 35,
                 .PinType =
                     {
                         // 35
                         FUNC_DEBUG0,    // PIO_GPIO
-                        FUNC_DEBUG0,    // PIO_GPIOHS
+                        FUNC_GPIOHS31,  // PIO_GPIOHS
                         FUNC_DEBUG0,    // PIO_I2C
                         FUNC_DEBUG0,    // PIO_SPI
                         FUNC_DEBUG0,    // PIO_UART
@@ -657,7 +620,6 @@ PinDescription
                     },
             },
             {
-                .IO = 36,
                 .PinType =
                     {
                         // 36
@@ -674,7 +636,6 @@ PinDescription
                     },
             },
             {
-                .IO = 37,
                 .PinType =
                     {
                         // 37
@@ -691,7 +652,6 @@ PinDescription
                     },
             },
             {
-                .IO = 38,
                 .PinType =
                     {
                         // 38
@@ -708,7 +668,6 @@ PinDescription
                     },
             },
             {
-                .IO = 39,
                 .PinType =
                     {
                         // 39
@@ -725,7 +684,6 @@ PinDescription
                     },
             },
             {
-                .IO = 40,
                 .PinType =
                     {
                         // 40
@@ -742,7 +700,6 @@ PinDescription
                     },
             },
             {
-                .IO = 41,
                 .PinType =
                     {
                         // 41
@@ -759,7 +716,6 @@ PinDescription
                     },
             },
             {
-                .IO = 42,
                 .PinType =
                     {
                         // 42
@@ -776,7 +732,6 @@ PinDescription
                     },
             },
             {
-                .IO = 43,
                 .PinType =
                     {
                         // 43
@@ -793,7 +748,6 @@ PinDescription
                     },
             },
             {
-                .IO = 44,
                 .PinType =
                     {
                         // 44
@@ -810,7 +764,6 @@ PinDescription
                     },
             },
             {
-                .IO = 45,
                 .PinType =
                     {
                         // 45
@@ -827,7 +780,6 @@ PinDescription
                     },
             },
             {
-                .IO = 46,
                 .PinType =
                     {
                         // 46
@@ -844,7 +796,6 @@ PinDescription
                     },
             },
             {
-                .IO = 47,
                 .PinType =
                     {
                         // 47
@@ -861,7 +812,6 @@ PinDescription
                     },
             },
             {
-                .IO = 48,
                 .PinType =
                     {
                         // 48

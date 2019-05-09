@@ -44,7 +44,7 @@ extern "C" {
  */
 void pinMode(pin_size_t pinNumber, PinMode pinMode) {
     fpioa_set_function(pinNumber, pin_map[pinNumber].PinType[PIO_GPIOHS]);
-    gpiohs_set_drive_mode(pin_map[pinNumber].IO, pinMode);
+    gpiohs_set_drive_mode(pin_map[pinNumber].PinType[PIO_GPIOHS] - FUNC_GPIOHS0, pinMode);
 }
 
 /**
@@ -60,14 +60,14 @@ void pinMode(pin_size_t pinNumber, PinMode pinMode) {
 * @param: HIGH or LOW
 * @return: Nothing
 */
-void digitalWrite(pin_size_t pinNumber, PinStatus status) { gpiohs_set_pin(pin_map[pinNumber].IO, status); }
+void digitalWrite(pin_size_t pinNumber, PinStatus status) { gpiohs_set_pin(pin_map[pinNumber].PinType[PIO_GPIOHS] - FUNC_GPIOHS0, status); }
 
 /**
  * @description: Reads define
  * @param: The number odefine
  * @return: HIGH or LOWdefine
  */
-PinStatus digitalRead(pin_size_t pinNumber) { return gpiohs_get_pin(pin_map[pinNumber].IO); }
+PinStatus digitalRead(pin_size_t pinNumber) { return gpiohs_get_pin(pin_map[pinNumber].PinType[PIO_GPIOHS] - FUNC_GPIOHS0); }
 #ifdef __cplusplus
 }
 #endif
