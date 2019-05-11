@@ -325,6 +325,6 @@ void TwoWire::onRequest(void (*function)(void)) { user_onRequest = function; }
 
 void TwoWire::onEvent(void (*function)(int)) { user_onEvent = function; }
 
-#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_I2C)
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_WIRE)
 TwoWire Wire(1);
 #endif
