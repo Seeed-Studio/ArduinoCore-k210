@@ -26,9 +26,8 @@
 
 #ifndef _SPI_H_INCLUDED
 #define _SPI_H_INCLUDED
-
-#include <Arduino.h>
-
+#include <inttypes.h>
+#include "Common.h"
 class SPISettings {
   public:
     SPISettings(uint32_t clock, BitOrder bitOrder, uint8_t dataMode) { init_AlwaysInline(clock, bitOrder, dataMode); }
@@ -48,7 +47,7 @@ class SPISettings {
 
 class SPIClass {
   public:
-    SPIClass();
+    SPIClass(uint8_t _spi_num, uint8_t _spi_clk, uint8_t _spi_mosi, uint8_t _spi_miso, uint8_t _spi_cs);
 
     byte transfer(uint8_t data);
     uint16_t transfer16(uint16_t data);
@@ -64,7 +63,7 @@ class SPIClass {
     void attachInterrupt();
     void detachInterrupt();
 
-    void begin(uint8_t _spi_num, uint8_t _spi_clk, uint8_t _spi_mosi, uint8_t _spi_miso, uint8_t _spi_cs);
+    void begin();
     void end();
 
     void setBitOrder(BitOrder order);
@@ -84,5 +83,10 @@ class SPIClass {
 
     bool initialized;
 };
+
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SPI)
+extern SPIClass SPI;
+extern SPIClass SPI1;
+#endif
 
 #endif

@@ -24,14 +24,15 @@
  * THE SOFTWARE.
  */
 
-#include "SPI.h"
+#include "SPIClass.h"
 #include "spi.h"
-#include <Arduino.h>
+#include "pins_arduino.h"
 #include <assert.h>
 #include <stdint.h>
 #include <wiring_private.h>
+#include "sysctl.h"
 
-#undef configASSERT
+// #undef configASSERT
 #include "utils.h"
 
 #define PLL0_OUTPUT_FREQ 800000000UL
@@ -70,7 +71,7 @@ static spi_transfer_width_t spi_get_frame_size(size_t data_bit_length) {
 }
 
 static void spi_set_tmod(uint8_t spi_num, uint32_t tmod) {
-    configASSERT(spi_num < SPI_DEVICE_MAX);
+    //configASSERT(spi_num < SPI_DEVICE_MAX);
     volatile spi_t *spi_handle = spi[spi_num];
     uint8_t tmod_offset = 0;
     switch (spi_num) {
@@ -87,8 +88,8 @@ static void spi_set_tmod(uint8_t spi_num, uint32_t tmod) {
     set_bit(&spi_handle->ctrlr0, 3 << tmod_offset, tmod << tmod_offset);
 }
 static void spi_send_receive_data_standard(spi_device_num_t spi_num, int8_t chip_select, const uint8_t *tx_buff, uint8_t *rx_buff, size_t len) {
-    configASSERT(spi_num < SPI_DEVICE_MAX && spi_num != 2);
-    configASSERT(len > 0);
+    //configASSERT(spi_num < SPI_DEVICE_MAX && spi_num != 2);
+    //configASSERT(len > 0);
     size_t index, fifo_len;
     size_t rx_len = len;
     size_t tx_len = rx_len;
@@ -96,14 +97,14 @@ static void spi_send_receive_data_standard(spi_device_num_t spi_num, int8_t chip
 
     volatile spi_t *spi_handle = spi[spi_num];
 
-    uint8_t dfs_offset;
+    uint8_t dfs_offset = 0;
     switch (spi_num) {
     case 0:
     case 1:
         dfs_offset = 16;
         break;
     case 2:
-        configASSERT(!"Spi Bus 2 Not Support!");
+        //configASSERT(!"Spi Bus 2 Not Support!");
         break;
     case 3:
     default:
@@ -170,14 +171,15 @@ static void spi_send_receive_data_standard(spi_device_num_t spi_num, int8_t chip
 }
 }
 
-SPIClass::SPIClass() {}
-
-void SPIClass::begin(uint8_t spi_num, uint8_t spi_clk, uint8_t spi_mosi, uint8_t spi_miso, uint8_t spi_cs) {
+SPIClass::SPIClass(uint8_t spi_num, uint8_t spi_clk, uint8_t spi_mosi, uint8_t spi_miso, uint8_t spi_cs) {
     _spi_num = spi_num;
     _spi_clk = spi_clk;
     _spi_mosi = spi_mosi;
     _spi_miso = spi_miso;
     _spi_cs = spi_cs;
+}
+
+void SPIClass::begin() {
     init();
 }
 
@@ -255,3 +257,9 @@ void SPIClass::attachInterrupt() {
 void SPIClass::detachInterrupt() {
     // Should be disableInterrupt()
 }
+
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SPI)
+SPIClass SPI(SPI_DEVICE_0,27,28,26,29);
+SPIClass SPI1(SPI_DEVICE_1,34,32,33,35);
+
+#endif
