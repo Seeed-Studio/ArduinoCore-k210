@@ -610,7 +610,7 @@ PinDescription
                         FUNC_DEBUG0,    // PIO_GPIO
                         FUNC_GPIOHS31,  // PIO_GPIOHS
                         FUNC_DEBUG0,    // PIO_I2C
-                        FUNC_DEBUG0,    // PIO_SPI
+                        FUNC_SPI0_SS0,    // PIO_SPI
                         FUNC_DEBUG0,    // PIO_UART
                         FUNC_DEBUG0,    // PIO_TIMER
                         FUNC_I2S0_SCLK, // PIO_I2S
