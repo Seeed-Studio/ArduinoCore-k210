@@ -28,10 +28,12 @@
 #define _SPI_H_INCLUDED
 #include <inttypes.h>
 #include "Common.h"
+#include "spi.h"
+
 class SPISettings {
   public:
     SPISettings(uint32_t clock, BitOrder bitOrder, uint8_t dataMode) { init_AlwaysInline(clock, bitOrder, dataMode); }
-    SPISettings() { init_AlwaysInline(1000000, MSBFIRST, 0); }
+    SPISettings() { init_AlwaysInline(1000000, LSBFIRST, 0); }
 
   private:
     void init_AlwaysInline(uint32_t clock, BitOrder bitOrder, uint8_t dataMode) __attribute__((__always_inline__)) {
@@ -76,7 +78,7 @@ class SPIClass {
     uint8_t _spi_clk;
     uint8_t _spi_mosi;
     uint8_t _spi_miso;
-    uint8_t _spi_cs;
+    spi_chip_select_t _spi_cs;
     uint8_t _spi_num;
 
     SPISettings _settings;
