@@ -100,7 +100,7 @@ TwoWire::TwoWire(int i2c_num, int sda_pin = 24, int scl_pin = 23) : _i2c_num((i2
 
 // Public Methods //////////////////////////////////////////////////////////////
 // Master
-void TwoWire::begin(void) { i2c_init(_i2c_num, 0x00, 7, 200000); }
+void TwoWire::begin(void) { i2c_init(_i2c_num, 0x00, 7, 100000); }
 
 // Slave
 void TwoWire::begin(uint8_t address) {
@@ -184,9 +184,9 @@ uint8_t TwoWire::endTransmission(uint8_t sendStop) {
     // transmit buffer (blocking)
     uint8_t ret = 0;
 #ifdef K210_I2C_USE_DMA
-    i2c_send_data_dma(DMAC_CHANNEL0, _i2c_num, txBuffer, txBufferLength + 1);
+    i2c_send_data_dma(DMAC_CHANNEL0, _i2c_num, txBuffer, txBufferLength);
 #else
-    ret = i2c_send_data(_i2c_num, txBuffer, txBufferLength + 1);
+    ret = i2c_send_data(_i2c_num, txBuffer, txBufferLength);
 #endif
     // reset tx buffer iterator vars
     txBufferIndex = 0;
