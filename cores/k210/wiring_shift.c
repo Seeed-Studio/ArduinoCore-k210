@@ -22,7 +22,7 @@ extern "C"
 {
 #endif
 
-    pin_size_t shiftIn(pin_size_t ulDataPin, pin_size_t ulClockPin, BitOrder ulBitOrder)
+    pin_size_t shiftIn(pin_size_t ulDataPin, pin_size_t ulClockPin, uint8_t ulBitOrder)
     {
         uint8_t value = 0;
         uint8_t i;
@@ -45,7 +45,7 @@ extern "C"
 
         return value;
     }
-    void shiftOut(pin_size_t ulDataPin, pin_size_t ulClockPin, BitOrder ulBitOrder, uint8_t ulVal)
+    void shiftOut(pin_size_t ulDataPin, pin_size_t ulClockPin, uint8_t ulBitOrder, uint8_t ulVal)
     {
         uint8_t i;
 
