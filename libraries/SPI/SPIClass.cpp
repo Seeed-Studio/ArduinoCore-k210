@@ -189,7 +189,7 @@ void SPIClass::beginTransaction(SPISettings settings) {
 
 void SPIClass::endTransaction(void) {}
 
-void SPIClass::setBitOrder(BitOrder order) {
+void SPIClass::setBitOrder(uint8_t order) {
     _settings._order = order;
     spi_init((spi_device_num_t)_spi_num, (spi_work_mode_t)_settings._mode, SPI_FF_STANDARD, 8, _settings._order);
 }

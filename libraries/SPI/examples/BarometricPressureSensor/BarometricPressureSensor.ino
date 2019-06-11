@@ -79,8 +79,9 @@ void loop() {
     //combine the two parts into one 19-bit number:
     long pressure = ((pressure_data_high << 16) | pressure_data_low) / 4;
 
-    // display the temperature:
-    Serial.println("\tPressure [Pa]=" + String(pressure));
+    // display the temperature
+    Serial.print("\tPressure [Pa]=");
+    Serial.println(pressure);
   }
 }
 
@@ -140,4 +141,3 @@ void writeRegister(byte thisRegister, byte thisValue) {
   // take the chip select high to de-select:
   digitalWrite(chipSelectPin, HIGH);
 }
-
