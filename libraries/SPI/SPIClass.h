@@ -32,16 +32,16 @@
 
 class SPISettings {
   public:
-    SPISettings(uint32_t clock, BitOrder bitOrder, uint8_t dataMode) { init_AlwaysInline(clock, bitOrder, dataMode); }
+    SPISettings(uint32_t clock, uint8_t bitOrder, uint8_t dataMode) { init_AlwaysInline(clock, bitOrder, dataMode); }
     SPISettings() { init_AlwaysInline(4000000, LSBFIRST, 0); }
 
   private:
-    void init_AlwaysInline(uint32_t clock, BitOrder bitOrder, uint8_t dataMode) __attribute__((__always_inline__)) {
+    void init_AlwaysInline(uint32_t clock, uint8_t bitOrder, uint8_t dataMode) __attribute__((__always_inline__)) {
         _order = bitOrder;
         _mode = dataMode;
         _clock = clock;
     }
-    BitOrder _order = LSBFIRST;
+    uint8_t _order = LSBFIRST;
     uint8_t _mode = 0;
     uint32_t _clock = 4000000;
     friend class SPIClass;
@@ -68,7 +68,7 @@ class SPIClass {
     void begin();
     void end();
 
-    void setBitOrder(BitOrder order);
+    void setBitOrder(uint8_t order);
     void setDataMode(uint8_t uc_mode);
     void setClockDivider(uint8_t uc_div);
 
