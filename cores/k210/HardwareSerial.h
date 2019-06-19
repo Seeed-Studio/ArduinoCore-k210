@@ -25,9 +25,12 @@
 #include "uart.h"
 #include "gpiohs.h"
 #include "sysctl.h"
+
+#ifdef FREERTOS
 #include <FreeRTOS.h>
 #include <semphr.h>
 #include <task.h>
+#endif
 
 
 
@@ -119,7 +122,11 @@ class HardwareSerial : public Stream
 
   private:
     uart_device_number_t uart;
+
+    #ifdef FREERTOS
     SemaphoreHandle_t receive_event_;
+    #endif
+
     RingBuffer *rb_;
 
     size_t read_timeout_ = 1000;

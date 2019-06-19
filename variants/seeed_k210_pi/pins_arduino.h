@@ -2,8 +2,10 @@
 #ifndef Pins_Arduino_h
 #define Pins_Arduino_h
 
+#define NOFREERTOS 
+
 #ifndef NOFREERTOS
-#define FREERTOS 1
+#define FREERTOS 
 #endif
 
 #include <fpioa.h>
