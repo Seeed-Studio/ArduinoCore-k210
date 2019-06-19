@@ -26,15 +26,30 @@
 
 #define ARDUINO_MAIN
 #include "Arduino.h"
+#include <FreeRTOS.h>
+#include <task.h>
+void  __attribute__((weak)) setup() {
 
-int main()
+}
+
+void  __attribute__((weak)) loop() {
+
+}
+void run_main_loop(void *ctx)
 {
-    /*init timer0 counter*/
-    init();
-
     setup();
     for (;;)
     {
         loop();
-    }    
+    }
+}
+
+int __attribute__((weak)) main()
+{
+    /*init timer0 counter*/
+    init();
+    xTaskCreate(run_main_loop, "run_main_loop", 2048, NULL, 1, NULL);
+    vTaskStartScheduler();
+    while (1)
+        ;
 }

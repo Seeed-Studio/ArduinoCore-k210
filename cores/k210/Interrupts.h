@@ -1,7 +1,7 @@
 #ifndef W_INTERRUPTS_CPP
 #define W_INTERRUPTS_CPP
 #ifdef __cplusplus
-
+#if 0
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -16,7 +16,7 @@ template<typename T> struct __container__ {
 };
 
 // C++ only overloaded version of attachInterrupt function
-template<typename T> void attachInterrupt(pin_size_t interruptNum, voidTemplateFuncPtrParam<T> userFunc, PinStatus mode, T& param) {
+template<typename T> void attachInterrupt(pin_size_t interruptNum, voidTemplateFuncPtrParam<T> userFunc, uint8_t mode, T& param) {
 
   struct __container__<T> *cont = new __container__<T>();
   cont->param = &param;
@@ -33,9 +33,9 @@ template<typename T> void attachInterrupt(pin_size_t interruptNum, voidTemplateF
   attachInterruptParam(interruptNum, f, mode, cont);
 }
 
-template<typename T> void attachInterrupt(pin_size_t interruptNum, voidTemplateFuncPtrParam<T*> userFunc, PinStatus mode, T* param) {
+template<typename T> void attachInterrupt(pin_size_t interruptNum, voidTemplateFuncPtrParam<T*> userFunc, uint8_t mode, T* param) {
   attachInterruptParam(interruptNum, (voidFuncPtrParam)userFunc, mode, (void*)param);
 }
-
+#endif
 #endif
 #endif

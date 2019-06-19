@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include "gpiohs.h"
 
 #ifdef __cplusplus
 extern "C"{
@@ -7,25 +8,19 @@ extern "C"{
 
 void yield(void);
 
-typedef enum {
-  LOW     = 0,
-  HIGH    = 1,
-  CHANGE  = 2,
-  FALLING = 3,
-  RISING  = 4,
-} PinStatus;
+#define LOW  0x0
+#define HIGH 0x1
+#define CHANGE 0x2
+#define FALLING 0x3
+#define RISING 0x4
 
-typedef enum {
-  INPUT           = 0x0,
-  INPUT_PULLDOWN  = 0x1,
-  INPUT_PULLUP    = 0x2,
-  OUTPUT          = 0x3,
-} PinMode;
+#define INPUT 0x0
+#define INPUT_PULLDOWN 0x1
+#define INPUT_PULLUP 0x2
+#define OUTPUT 0x3
 
-typedef enum {
-  LSBFIRST = 0,
-  MSBFIRST = 1,
-} BitOrder;
+#define LSBFIRST 0
+#define MSBFIRST 1
 
 #define PI          3.1415926535897932384626433832795
 #define HALF_PI     1.5707963267948966192313216916398
@@ -34,8 +29,6 @@ typedef enum {
 #define RAD_TO_DEG  57.295779513082320876798154814105
 #define EULER       2.718281828459045235360287471352
 
-#define SERIAL      0x0
-#define DISPLAY     0x1
 
 #ifndef _min
 #define _min(a,b) \
@@ -68,9 +61,12 @@ typedef enum {
 #endif
 
 typedef void (*voidFuncPtr)(void);
-typedef void (*voidFuncPtrParam)(void*);
+typedef int (*voidFuncPtrParam)(void*);
 
 // interrupts() / noInterrupts() must be defined by the core
+#define interrupts() sysctl_enable_irq()
+#define noInterrupts() sysctl_disable_irq()
+
 
 #define lowByte(w) ((uint8_t) ((w) & 0xff))
 #define highByte(w) ((uint8_t) ((w) >> 8))
@@ -102,9 +98,9 @@ typedef uint32_t pin_size_t;
 typedef uint8_t pin_size_t;
 #endif
 
-void pinMode(pin_size_t pinNumber, PinMode pinMode);
-void digitalWrite(pin_size_t pinNumber, PinStatus status);
-PinStatus digitalRead(pin_size_t pinNumber);
+void pinMode(pin_size_t pinNumber, uint8_t pinMode);
+void digitalWrite(pin_size_t pinNumber, uint8_t status);
+uint8_t digitalRead(pin_size_t pinNumber);
 int analogRead(pin_size_t pinNumber);
 void analogReference(uint8_t mode);
 void analogWrite(pin_size_t pinNumber, int value);
@@ -116,11 +112,11 @@ void delayMicroseconds(unsigned int us);
 unsigned long pulseIn(pin_size_t pin, uint8_t state, unsigned long timeout);
 unsigned long pulseInLong(pin_size_t pin, uint8_t state, unsigned long timeout);
 
-void shiftOut(pin_size_t dataPin, pin_size_t clockPin, BitOrder bitOrder, uint8_t val);
-pin_size_t shiftIn(pin_size_t dataPin, pin_size_t clockPin, BitOrder bitOrder);
+void shiftOut(pin_size_t dataPin, pin_size_t clockPin, uint8_t bitOrder, uint8_t val);
+pin_size_t shiftIn(pin_size_t dataPin, pin_size_t clockPin, uint8_t bitOrder);
 
-void attachInterrupt(pin_size_t interruptNumber, voidFuncPtr callback, PinStatus mode);
-void attachInterruptParam(pin_size_t interruptNumber, voidFuncPtrParam callback, PinStatus mode, void* param);
+void attachInterrupt(pin_size_t interruptNumber, voidFuncPtr callback, gpio_pin_edge_t mode);
+void attachInterruptParam(pin_size_t interruptNumber, voidFuncPtrParam callback, gpio_pin_edge_t mode, void* param);
 void detachInterrupt(pin_size_t interruptNumber);
 
 void setup(void);
@@ -141,7 +137,7 @@ uint16_t makeWord(byte h, byte l);
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout = 1000000L);
 unsigned long pulseInLong(uint8_t pin, uint8_t state, unsigned long timeout = 1000000L);
 
-void tone(uint8_t _pin, unsigned int frequency, unsigned long duration = 0);
+void tone(uint8_t _pin, unsigned int frequency, double duration=0.5);
 void noTone(uint8_t _pin);
 
 // WMath prototypes

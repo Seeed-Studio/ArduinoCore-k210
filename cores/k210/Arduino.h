@@ -20,7 +20,14 @@
 #ifndef ARDUINO_API_H
 #define ARDUINO_API_H
 // version 1.0.0
+
+#ifndef ARDUINO_API_VERSION
 #define ARDUINO_API_VERSION 10000
+#endif
+
+#ifndef KENDRYTE_K210
+#define KENDRYTE_K210 1
+#endif
 
 #include "Binary.h"
 
@@ -38,19 +45,17 @@
 #include "Printable.h"
 #include "PluggableUSB.h"
 #include "Server.h"
-#include "String.h"
+#include "WString.h"
 #include "Stream.h"
 #include "Udp.h"
 #include "USBAPI.h"
 #include "WCharacter.h"
 
-
-
-using std::min;
-using std::max;
+using ::round;
 using std::isinf;
 using std::isnan;
-using ::round;
+using std::max;
+using std::min;
 #endif
 
 /* Standard C library includes */
@@ -64,4 +69,9 @@ using ::round;
 #include "Common.h"
 
 #include "pins_arduino.h"
+#ifdef ARDUINO_DEBUG
+#define DEBUGV(_f, ...)  printf(_f, ## __VA_ARGS__)
+#else
+#define DEBUGV(...)
+#endif
 #endif

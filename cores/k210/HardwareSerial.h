@@ -16,48 +16,35 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-/**
- * 为什么不用官方的uart.cpp
- * 1, 不支持peek，flush
- * 2, 需要支持Stream
- * 
- * TODO: settimeout需要优化
-*/
-
 #pragma once
 
-#include <inttypes.h>
-#include "Stream.h"
-#include <devices.h>
-#include <string.h>
-
-#include <FreeRTOS.h>
-#include <hal.h>
-#include <kernel/driver_impl.hpp>
-#include <plic.h>
-#include <semphr.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sysctl.h>
-#include <uart.h>
+#include "Arduino.h"
 #include "RingBuffer.h"
+#include "fpioa.h"
+#include <string.h>
+#include "uart.h"
+#include "gpiohs.h"
+#include "sysctl.h"
+#include <FreeRTOS.h>
+#include <semphr.h>
+#include <task.h>
 
 
 
 // XXX: Those constants should be defined as const int / enums?
 // XXX: shall we use namespaces too?
 
-#define SERIAL_PARITY_EVEN   (0x1ul)
-#define SERIAL_PARITY_ODD    (0x2ul)
-#define SERIAL_PARITY_NONE   (0x3ul)
+#define SERIAL_PARITY_EVEN   (0x2ul)
+#define SERIAL_PARITY_ODD    (0x1ul)
+#define SERIAL_PARITY_NONE   (0x0ul)
 // #define SERIAL_PARITY_MARK   (0x4ul)
 // #define SERIAL_PARITY_SPACE  (0x5ul)
-#define SERIAL_PARITY_MASK   (0xFul)
+#define SERIAL_PARITY_MASK   (0x3ul)
 
-#define SERIAL_STOP_BIT_1    (0x10ul)
-#define SERIAL_STOP_BIT_1_5  (0x20ul)
-#define SERIAL_STOP_BIT_2    (0x30ul)
-#define SERIAL_STOP_BIT_MASK (0xF0ul)
+#define SERIAL_STOP_BIT_1    (0x00ul)
+#define SERIAL_STOP_BIT_1_5  (0x10ul)
+#define SERIAL_STOP_BIT_2    (0x20ul)
+#define SERIAL_STOP_BIT_MASK (0x30ul)
 
 
 
@@ -112,8 +99,9 @@
 class HardwareSerial : public Stream
 {
   public:
-    HardwareSerial(uintptr_t base_addr, sysctl_clock_t clock, plic_irq_t irq);
-    void begin(unsigned long);
+    HardwareSerial(uart_device_number_t uart_num_ = UART_DEVICE_1, int rx_pin_ = 4, int tx_pin_ = 5);
+    virtual ~HardwareSerial(){}
+    void begin(unsigned long baudrate);
     void begin(unsigned long baudrate, uint16_t config);
     void end();
     int available(void);
@@ -125,23 +113,19 @@ class HardwareSerial : public Stream
     operator bool() const;
 
   private:
-    static void on_irq_recv_callback_(void *userdata);
-    void init_(void);
-    void ParameterConfig_(uint32_t baud_rate, uint32_t databits, uart_stopbits_t stopbits, uart_parity_t parity) ;
+    static int on_irq_recv_callback_(void *userdata);
+    void init_(unsigned long baudrate, uint16_t config, uart_device_number_t uart_num, int rx_pin, int tx_pin);
 
 
   private:
-    volatile uart_t &uart_;
-    sysctl_clock_t clock_;
-    plic_irq_t irq_;
+    uart_device_number_t uart;
     SemaphoreHandle_t receive_event_;
-
-    unsigned long baudrate_;
-    uint16_t config_;
-
     RingBuffer *rb_;
 
-    size_t read_timeout_ = portMAX_DELAY;
+    size_t read_timeout_ = 1000;
+    uart_device_number_t _uart_num;
+    int _rx_pin;
+    int _tx_pin;
 };
 
 // XXX: Are we keeping the serialEvent API?
@@ -149,5 +133,6 @@ extern void serialEventRun(void) __attribute__((weak));
 
 #if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SERIAL)
 extern HardwareSerial Serial;
+extern HardwareSerial Serial1;
 #endif
 

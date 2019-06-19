@@ -23,25 +23,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-#include "devices.h"
+#include <sleep.h>
 #include <FreeRTOS.h>
 #include <task.h>
-volatile unsigned long timer0_overflow_count = 0;
-volatile unsigned long timer0_millis = 0;
-
-
-handle_t gio;
-
+#include "bsp.h"
+#include "sysctl.h"
+#include "plic.h"
+#include <timer.h>
+#include <pwm.h>
+#include "pins_arduino.h"
 // the whole number of milliseconds per timer0 overflow
 #define MILLIS_INC 1000
-
+#ifdef MICROPYTHON
+extern  void mp_hal_delay_ms(uint64_t ms);
+extern  void mp_hal_delay_us(uint64_t us);
+#endif
 /**
  * Description: Returns the number of milliseconds passed since the Arduino 
  * board began running the current program. This number will overflow (go 
  * back to zero), after approximately 50 days.
 */
 unsigned long millis(){
-    return timer0_millis;
+    uint64_t v_cycle = read_cycle();
+    return v_cycle * 1000 / sysctl_clock_get_freq(SYSCTL_CLOCK_CPU);
+
 }
 
 /**
@@ -53,7 +58,8 @@ unsigned long millis(){
  * boards (e.g. the LilyPad), this function has a resolution of eight microseconds.
 */
 unsigned long micros() {
-    return timer0_overflow_count;
+    uint64_t v_cycle = read_cycle();
+    return v_cycle * 1000000 / sysctl_clock_get_freq(SYSCTL_CLOCK_CPU);
 }
 
 /**
@@ -61,7 +67,13 @@ unsigned long micros() {
  * specified as parameter. (There are 1000 milliseconds in a second.)
 */
 void delay(unsigned long ms){
+#ifdef FREERTOS
     vTaskDelay(ms / portTICK_RATE_MS);
+#elif MICROPYTHON
+    mp_hal_delay_ms(ms);
+#elif NOFREERTOS
+    msleep(ms);
+#endif
 }
 
 /**
@@ -72,36 +84,44 @@ void delay(unsigned long ms){
  * 
 */
 void delayMicroseconds(unsigned int us){
-    uint32_t m = micros();
-    if(us){
-        uint32_t e = (m + us);
-        if(m > e){ //overflow
-            while(micros() > e){
-                portNOP();
-            }
-        }
-        while(micros() < e){
-            portNOP();
-        }
-    }
+#ifndef MICROPYTHON
+    usleep(us);
+#else
+    mp_hal_delay_ms(us);
+#endif
 }
 
 
+extern void timer_set_clock_div(timer_device_number_t timer_number, uint32_t div);
 
-static void on_tick ( void *unused )
+int  __attribute__((weak)) timer_callback(void *ctx)
 {
-    timer0_overflow_count++;
-    if (timer0_overflow_count % MILLIS_INC == 0){
-        timer0_millis++;
-    }
+    return 0;
 }
 
-void init(){
-    handle_t timer = io_open("/dev/timer0" );
-    timer_set_interval(timer, 1000 );
-    timer_set_on_tick(timer, on_tick, NULL );
-    timer_set_enable(timer, true );    
+void __attribute__((weak))  init(){
+    plic_init();
+    sysctl_enable_irq();
 
-    gio = io_open("/dev/gpio0");
-    configASSERT(gio);
+    timer_set_clock_div((timer_device_number_t)TIMER_PWM, 0);
+    timer_init((timer_device_number_t)TIMER_PWM);
+
+    /* Set timer interval to 10ms (1e7ns) */
+    timer_set_interval((timer_device_number_t)TIMER_PWM, (timer_channel_number_t)TIMER_PWM_CHN1, 1e7);
+        /* Set timer interval to 10ms (1e7ns) */
+    timer_set_interval((timer_device_number_t)TIMER_PWM, (timer_channel_number_t)TIMER_PWM_CHN2, 1e7);
+
+    /* Set timer callback function with repeat method */
+    timer_irq_register((timer_device_number_t)TIMER_PWM, (timer_channel_number_t)TIMER_PWM_CHN1, 0, 1, timer_callback, NULL);
+        /* Set timer callback function with repeat method */
+    timer_irq_register((timer_device_number_t)TIMER_PWM, (timer_channel_number_t)TIMER_PWM_CHN2, 0, 1, timer_callback, NULL);
+
+    timer_set_enable((timer_device_number_t)TIMER_PWM,(timer_channel_number_t)TIMER_PWM_CHN1, 1);
+    timer_set_enable((timer_device_number_t)TIMER_PWM,(timer_channel_number_t)TIMER_PWM_CHN2, 1);
+
+    pwm_init((pwm_device_number_t)TIMER_PWM);
+    /* Enable PWM */
+    pwm_set_enable((pwm_device_number_t)TIMER_PWM, (pwm_channel_number_t)TIMER_PWM_CHN1, 1);
+    pwm_set_enable((pwm_device_number_t)TIMER_PWM, (pwm_channel_number_t)TIMER_PWM_CHN2, 1);
+
 }
