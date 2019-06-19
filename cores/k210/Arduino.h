@@ -21,6 +21,8 @@
 #define ARDUINO_API_H
 // version 1.0.0
 
+// No FreeRTOS is used
+
 #ifndef ARDUINO_API_VERSION
 #define ARDUINO_API_VERSION 10000
 #endif
