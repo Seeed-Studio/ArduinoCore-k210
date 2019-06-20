@@ -23,9 +23,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+#ifdef FREERTOS
 #include <sleep.h>
 #include <FreeRTOS.h>
 #include <task.h>
+#endif
 #include "bsp.h"
 #include "sysctl.h"
 #include "plic.h"
@@ -71,7 +73,7 @@ void delay(unsigned long ms){
     vTaskDelay(ms / portTICK_RATE_MS);
 #elif MICROPYTHON
     mp_hal_delay_ms(ms);
-#elif NOFREERTOS
+#else
     msleep(ms);
 #endif
 }

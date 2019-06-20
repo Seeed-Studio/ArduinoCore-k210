@@ -49,12 +49,15 @@ int HardwareSerial::on_irq_recv_callback_(void *userdata) {
     auto &driver = *reinterpret_cast<HardwareSerial *>(userdata);
     uart_receive_data(driver.uart, &data, 1);
     driver.rb_->store_char(data);
+
+    #ifdef FREERTOS
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     xSemaphoreGiveFromISR(driver.receive_event_, &xHigherPriorityTaskWoken);
     if (xHigherPriorityTaskWoken) {
-        vTaskSwitchContext();
+        vTaskSwitchContext();                                       
         // vPortYieldFromISR();
     }
+    #endif
     return 0;
 }
 
@@ -69,7 +72,9 @@ void HardwareSerial::init_(unsigned long baudrate, uint16_t config, uart_device_
     uart_set_receive_trigger(uart_num, UART_RECEIVE_FIFO_8);
     uart_irq_register(uart_num, UART_RECEIVE, on_irq_recv_callback_, this, 2);
 
+    #ifdef FREERTOS
     receive_event_ = xSemaphoreCreateBinary();
+    #endif
 
     rb_ = new RingBuffer();
     rb_->clear();
@@ -126,11 +131,16 @@ int HardwareSerial::read(void) {
         if (0 != rb_->available()) {
             return rb_->read_char();
         } else {
+            #ifdef FREERTOS
             if (xSemaphoreTake(receive_event_, read_timeout_) == pdTRUE) {
                 continue;
             } else {
                 return -1;
             }
+            #else
+            return -1;
+            #endif
+
         }
     }
 }

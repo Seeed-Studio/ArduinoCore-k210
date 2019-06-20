@@ -26,8 +26,10 @@
 
 #define ARDUINO_MAIN
 #include "Arduino.h"
+#ifdef FREERTOS
 #include <FreeRTOS.h>
 #include <task.h>
+#endif
 void  __attribute__((weak)) setup() {
 
 }
@@ -35,6 +37,8 @@ void  __attribute__((weak)) setup() {
 void  __attribute__((weak)) loop() {
 
 }
+
+#ifdef FREERTOS
 void run_main_loop(void *ctx)
 {
     setup();
@@ -53,3 +57,13 @@ int __attribute__((weak)) main()
     while (1)
         ;
 }
+#else
+int main()
+{
+    setup();
+    for (;;)
+    {
+        loop();
+    }
+}
+#endif
