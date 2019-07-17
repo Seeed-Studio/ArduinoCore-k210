@@ -27,8 +27,8 @@
 #include "HardwareSerial.h"
 
 #if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SERIAL)
-HardwareSerial Serial(UART_DEVICE_1,4,5);
-HardwareSerial Serial1(UART_DEVICE_2,6,7);
+HardwareSerial Serial(UART_DEVICE_1,RX0,TX0);
+HardwareSerial Serial1(UART_DEVICE_2,RX1,TX1);
 #endif
 
 #define UART_BRATE_CONST 16

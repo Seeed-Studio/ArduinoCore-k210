@@ -238,7 +238,7 @@ void SPIClass::detachInterrupt() {
 }
 
 #if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SPI)
-SPIClass SPI(SPI_DEVICE_1, 27, 28, 26, 0);
-SPIClass SPI1(SPI_DEVICE_0, 34, 32, 33, 0);
+SPIClass SPI(SPI_DEVICE_1, SPI0_SCK, SPI0_MOSI, SPI0_MISO, 0);
+SPIClass SPI1(SPI_DEVICE_0, SPI1_SCK, SPI1_MOSI, SPI1_MISO, 0);
 
 #endif

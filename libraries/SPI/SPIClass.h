@@ -30,10 +30,15 @@
 #include "Common.h"
 #include "spi.h"
 
+#define SPI_MODE0 SPI_WORK_MODE_0
+#define SPI_MODE1 SPI_WORK_MODE_1
+#define SPI_MODE2 SPI_WORK_MODE_2
+#define SPI_MODE3 SPI_WORK_MODE_3
+
 class SPISettings {
   public:
     SPISettings(uint32_t clock, uint8_t bitOrder, uint8_t dataMode) { init_AlwaysInline(clock, bitOrder, dataMode); }
-    SPISettings() { init_AlwaysInline(4000000, LSBFIRST, 0); }
+    SPISettings() { init_AlwaysInline(4000000, LSBFIRST, SPI_MODE0); }
 
   private:
     void init_AlwaysInline(uint32_t clock, uint8_t bitOrder, uint8_t dataMode) __attribute__((__always_inline__)) {
@@ -42,7 +47,7 @@ class SPISettings {
         _clock = clock;
     }
     uint8_t _order = LSBFIRST;
-    uint8_t _mode = 0;
+    uint8_t _mode = SPI_MODE0;
     uint32_t _clock = 4000000;
     friend class SPIClass;
 };

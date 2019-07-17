@@ -1,3 +1,4 @@
+/*widora AIRV pins map*/
 #pragma once
 #ifndef Pins_Arduino_h
 #define Pins_Arduino_h
@@ -10,30 +11,24 @@
 
 #include <fpioa.h>
 #include <stdint.h>
-#define LED_BUILTIN 13
 
-#define A0 0
-#define A1 1
-#define A2 2
-#define A3 3
-
-#define TIMER_PWM 0
-#define TIMER_PWM_CHN1 0
-#define TIMER_PWM_CHN2 1
-
-#define PIN_WIRE_SDA 24
-#define PIN_WIRE_SCL 23
+#define PIN_WIRE_SDA 31
+#define PIN_WIRE_SCL 30
 #define I2C_NUM 1
 
 static const uint8_t SDA = PIN_WIRE_SDA;
 static const uint8_t SCL = PIN_WIRE_SCL;
 
+
 #define RX0 4
 #define TX0 5
 
-#define RX1 6
-#define TX1 7
+#define RX1 10
+#define TX1 9
 
+#define TIMER_PWM 0
+#define TIMER_PWM_CHN1 0
+#define TIMER_PWM_CHN2 1
 
 #define SPI0_MISO     26 
 #define SPI0_MOSI     28
@@ -49,6 +44,8 @@ static const uint8_t SS	  = SPI0_SS;
 static const uint8_t MOSI = SPI0_MOSI;
 static const uint8_t MISO = SPI0_MISO;
 static const uint8_t SCK  = SPI0_SCK;
+
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -162,7 +159,7 @@ PinDescription
                         FUNC_GPIOHS1,  // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
-                        FUNC_UART1_TX, // PIO_UART
+                        FUNC_UART1_TX,   // PIO_UART
                         FUNC_DEBUG0,   // PIO_TIMER
                         FUNC_DEBUG0,   // PIO_I2S
                         FUNC_DEBUG0,   // PIO_CMOS
@@ -178,7 +175,7 @@ PinDescription
                         FUNC_GPIOHS2,  // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
-                        FUNC_UART2_RX, // PIO_UART
+                        FUNC_DEBUG0, // PIO_UART
                         FUNC_DEBUG0,   // PIO_TIMER
                         FUNC_DEBUG0,   // PIO_I2S
                         FUNC_DEBUG0,   // PIO_CMOS
@@ -194,7 +191,7 @@ PinDescription
                         FUNC_GPIOHS3,  // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
-                        FUNC_UART2_TX, // PIO_UART
+                        FUNC_DEBUG0, // PIO_UART
                         FUNC_DEBUG0,   // PIO_TIMER
                         FUNC_DEBUG0,   // PIO_I2S
                         FUNC_DEBUG0,   // PIO_CMOS
@@ -226,7 +223,7 @@ PinDescription
                         FUNC_GPIOHS5, // PIO_GPIOHS
                         FUNC_DEBUG0,  // PIO_I2C
                         FUNC_DEBUG0,  // PIO_SPI
-                        FUNC_DEBUG0,  // PIO_UART
+                        FUNC_UART2_TX,  // PIO_UART
                         FUNC_DEBUG0,  // PIO_TIMER
                         FUNC_DEBUG0,  // PIO_I2S
                         FUNC_DEBUG0,  // PIO_CMOS
@@ -242,7 +239,7 @@ PinDescription
                         FUNC_GPIOHS6, // PIO_GPIOHS
                         FUNC_DEBUG0,  // PIO_I2C
                         FUNC_DEBUG0,  // PIO_SPI
-                        FUNC_DEBUG0,  // PIO_UART
+                        FUNC_UART2_RX,  // PIO_UART
                         FUNC_DEBUG0,  // PIO_TIMER
                         FUNC_DEBUG0,  // PIO_I2S
                         FUNC_DEBUG0,  // PIO_CMOS
@@ -258,7 +255,7 @@ PinDescription
                         FUNC_GPIOHS7,        // PIO_GPIOHS
                         FUNC_DEBUG0,         // PIO_I2C
                         FUNC_DEBUG0,         // PIO_SPI
-                        FUNC_UART2_TX,       // PIO_UART
+                        FUNC_DEBUG0,       // PIO_UART
                         FUNC_TIMER0_TOGGLE2, // PIO_TIMER
                         FUNC_DEBUG0,         // PIO_I2S
                         FUNC_DEBUG0,         // PIO_CMOS
@@ -274,7 +271,7 @@ PinDescription
                         FUNC_GPIOHS8,        // PIO_GPIOHS
                         FUNC_DEBUG0,         // PIO_I2C
                         FUNC_DEBUG0,         // PIO_SPI
-                        FUNC_UART2_RX,       // PIO_UART
+                        FUNC_DEBUG0,       // PIO_UART
                         FUNC_TIMER0_TOGGLE1, // PIO_TIMER
                         FUNC_DEBUG0,         // PIO_I2S
                         FUNC_DEBUG0,         // PIO_CMOS
@@ -290,7 +287,7 @@ PinDescription
                         FUNC_GPIOHS9,  // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
-                        FUNC_UART3_RX, // PIO_UART
+                        FUNC_DEBUG0, // PIO_UART
                         FUNC_DEBUG0,   // PIO_TIMER
                         FUNC_DEBUG0,   // PIO_I2S
                         FUNC_DEBUG0,   // PIO_CMOS
@@ -306,7 +303,7 @@ PinDescription
                         FUNC_GPIOHS10, // PIO_GPIOHS
                         FUNC_DEBUG0,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
-                        FUNC_UART3_TX, // PIO_UART
+                        FUNC_DEBUG0, // PIO_UART
                         FUNC_DEBUG0,   // PIO_TIMER
                         FUNC_DEBUG0,   // PIO_I2S
                         FUNC_DEBUG0,   // PIO_CMOS
@@ -352,7 +349,7 @@ PinDescription
                         // 17
                         FUNC_DEBUG0,   // PIO_GPIO
                         FUNC_GPIOHS13, // PIO_GPIOHS
-                        FUNC_I2C0_SDA, // PIO_I2C
+                        FUNC_DEBUG0, // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
                         FUNC_DEBUG0,   // PIO_TIMER
@@ -368,7 +365,7 @@ PinDescription
                         // 18
                         FUNC_DEBUG0,    // PIO_GPIO
                         FUNC_GPIOHS14,  // PIO_GPIOHS
-                        FUNC_I2C1_SCLK, // PIO_I2C
+                        FUNC_DEBUG0, // PIO_I2C
                         FUNC_DEBUG0,    // PIO_SPI
                         FUNC_DEBUG0,    // PIO_UART
                         FUNC_DEBUG0,    // PIO_TIMER
@@ -384,7 +381,7 @@ PinDescription
                         // 19
                         FUNC_DEBUG0,   // PIO_GPIO
                         FUNC_GPIOHS15, // PIO_GPIOHS
-                        FUNC_I2C1_SDA, // PIO_I2C
+                        FUNC_DEBUG0, // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
                         FUNC_DEBUG0,   // PIO_TIMER
@@ -448,7 +445,7 @@ PinDescription
                         // 23
                         FUNC_DEBUG0,    // PIO_GPIO
                         FUNC_GPIOHS19,  // PIO_GPIOHS
-                        FUNC_I2C1_SCLK, // PIO_I2C
+                        FUNC_DEBUG0, // PIO_I2C
                         FUNC_DEBUG0,    // PIO_SPI
                         FUNC_DEBUG0,    // PIO_UART
                         FUNC_DEBUG0,    // PIO_TIMER
@@ -464,7 +461,7 @@ PinDescription
                         // 24
                         FUNC_DEBUG0,   // PIO_GPIO
                         FUNC_GPIOHS20, // PIO_GPIOHS
-                        FUNC_I2C1_SDA, // PIO_I2C
+                        FUNC_DEBUG0, // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
                         FUNC_DEBUG0,   // PIO_TIMER
@@ -560,7 +557,7 @@ PinDescription
                         // 30
                         FUNC_DEBUG0,   // PIO_GPIO
                         FUNC_GPIOHS26, // PIO_GPIOHS
-                        FUNC_DEBUG0,   // PIO_I2C
+                        FUNC_I2C1_SCLK,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
                         FUNC_DEBUG0,   // PIO_TIMER
@@ -576,7 +573,7 @@ PinDescription
                         // 31
                         FUNC_DEBUG0,   // PIO_GPIO
                         FUNC_GPIOHS27, // PIO_GPIOHS
-                        FUNC_DEBUG0,   // PIO_I2C
+                        FUNC_I2C1_SDA,   // PIO_I2C
                         FUNC_DEBUG0,   // PIO_SPI
                         FUNC_DEBUG0,   // PIO_UART
                         FUNC_DEBUG0,   // PIO_TIMER
