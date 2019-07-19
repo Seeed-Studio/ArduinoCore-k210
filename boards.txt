@@ -125,3 +125,54 @@ maix_bit.upload.tool=kflash
 maix_bit.upload.maximum_size=8388608
 maix_bit.build.ldscript={runtime.tools.kendryte-standalone-sdk.path}/lds/kendryte.ld
 
+
+
+##################################################
+############# Widora AIRV  ###############
+
+widora_AIRV.name=Widora AIRV
+## widora_AIRV.vid.0=0x10C4
+## widora_AIRV.pid.0=0xEA60
+
+## Toolchain
+widora_AIRV.menu.toolsloc.default=Default
+widora_AIRV.menu.toolsloc.default.compiler.path={runtime.tools.riscv64-unknown-elf-gcc.path}/bin/
+
+## CPU Clock
+widora_AIRV.menu.clksrc.400=400MHz CPU Clock Frequency
+widora_AIRV.menu.clksrc.500=500MHz CPU Clock Frequency
+widora_AIRV.menu.clksrc.600=600MHz CPU Clock Frequency
+widora_AIRV.menu.clksrc.400.build.f_cpu=400000000L
+widora_AIRV.menu.clksrc.500.build.f_cpu=500000000L
+widora_AIRV.menu.clksrc.600.build.f_cpu=600000000L
+
+## Burn baud rate
+widora_AIRV.menu.burn_baudrate.2000000=2 Mbps
+widora_AIRV.menu.burn_baudrate.1500000=1.5 Mbps
+widora_AIRV.menu.burn_baudrate.1000000=1 Mbps
+widora_AIRV.menu.burn_baudrate.2000000.build.burn_baudrate=2000000
+widora_AIRV.menu.burn_baudrate.1500000.build.burn_baudrate=1500000
+widora_AIRV.menu.burn_baudrate.1000000.build.burn_baudrate=1000000
+
+## Burn tool firmware
+widora_AIRV.menu.burn_tool_firmware.dan=Default
+widora_AIRV.menu.burn_tool_firmware.dan.build.burn_tool_firmware=dan
+
+## Point to the file for ./variants/<variant>/pins_arduino.h
+widora_AIRV.build.variant=widora_AIRV
+
+## "The 'core' file directory for this board, in ./cores
+widora_AIRV.build.core=k210
+
+## This sets a define for use in the compiled code.
+widora_AIRV.build.board=BOARD_WIDORA_AIRV
+widora_AIRV.build.sdata.size=512
+
+## This selects the tool from "programmers.txt"
+widora_AIRV.program.tool=kflash
+widora_AIRV.upload.tool=kflash
+
+## Limit is the 16MB Flash. Assume half is used for something else.
+widora_AIRV.upload.maximum_size=8388608
+widora_AIRV.build.ldscript={runtime.tools.kendryte-standalone-sdk.path}/lds/kendryte.ld
+
