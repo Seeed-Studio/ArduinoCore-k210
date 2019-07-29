@@ -185,6 +185,7 @@ void SPIClass::notUsingInterrupt(int interruptNumber) {}
 void SPIClass::beginTransaction(SPISettings settings) {
     _settings = settings;
     spi_init((spi_device_num_t)_spi_num, (spi_work_mode_t)_settings._mode, SPI_FF_STANDARD, 8, _settings._order);
+	  spi_set_clk_rate((spi_device_num_t)_spi_num, _settings._clock);
 }
 
 void SPIClass::endTransaction(void) {}
@@ -201,6 +202,7 @@ void SPIClass::setDataMode(uint8_t mode) {
 void SPIClass::setClockDivider(uint8_t clock) {
     _settings._clock = clock;
     spi_init((spi_device_num_t)_spi_num, (spi_work_mode_t)_settings._mode, SPI_FF_STANDARD, 8, _settings._order);
+	spi_set_clk_rate((spi_device_num_t)_spi_num, _settings._clock);
 }
 
 byte SPIClass::transfer(uint8_t data) {
