@@ -39,8 +39,9 @@ sudo pip3 install pyserial
 
 ```
 git clone https://github.com/kendryte/kendryte-standalone-sdk
-git clone https://github.com/seeed-Studio/ArduinoCore-k210 kendryte-standalone-sdk/src
+git clone https://github.com/seeed-Studio/ArduinoCore-k210 kendryte-standalone-sdk/src/ArduinoCore-k210
 mkdir build && cd build
+# Make sure you cross-compile the toolchain with the correct path
 cmake .. -DPROJ=ArduinoCore-k210  -DSKETCH=Blink -DTOOLCHAIN=/opt/kendryte-toolchain/bin && make -j8
 ```
 cmake is very friendly on Linux and Macosx. You can even add a lot of third-party libraries. Here's an [example](https://github.com/Seeed-Studio/ArduinoCore-k210/blob/kendryte-standalone-sdk/micropython.cmake) of adding miropython as a third party
